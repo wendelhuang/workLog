@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('')"></head>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+<body>
+<div id="dpLTE">
+	  <el-table stripe border :data="tableData">
+	    <el-table-column prop="workDate" label="日期" min-wiedth="8%" header-align="center" align="center">
+	    </el-table-column>
+	    <el-table-column prop="dayOfWeek" label="星期" min-wiedth="8%" header-align="center" align="center">
+	    </el-table-column>
+	    <el-table-column prop="morning" label="上午" header-align="center" align="left">
+	      <template slot-scope="scope">
+	        <el-input type="textarea" autosize v-model="scope.row.morning"></el-input>
+	      </template>
+	    </el-table-column>
+	    <el-table-column prop="afternoon" label="下午" header-align="center" align="left">
+	      <template slot-scope="scope">
+	        <el-input type="textarea" autosize  v-model="scope.row.afternoon"></el-input>
+	      </template>
+	    </el-table-column>
+	    <el-table-column prop="evening" label="晚上" header-align="center" align="left">
+	      <template slot-scope="scope">
+	        <el-input type="textarea" autosize v-model="scope.row.evening"></el-input>
+	      </template>
+	    </el-table-column>
+	    <el-table-column label="操作" header-align="center" align="center">
+	      <template slot-scope="scope">
+	        <a @click="saveWorkLog(scope.row.id, scope.row.workDate, scope.row.morning, scope.row.afternoon, scope.row.evening)" title="保存"><i class="fa fa-save"></i></a>
+	        <a @click="removeWorkLog(scope.row.id, scope.row.workDate)" title="清空"><i class="fa fa-trash-o"></i></a>
+	      </template>
+	    </el-table-column>
+	  </el-table>
+	
+    <div class="btn-group">
+        <a class="btn btn-default" @click="setContent">保存</a>
+    </div>
+</div>
+<div th:include="include/footer_js::footer"></div>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script th:src="@{/statics/js/cbs/cbstworklog/list.js}"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTCalenDateMapper">
+	
+	<select id="listForPage" resultType="CbsTCalenDateEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`CALEN_ID`, 
+			`DATE_FMT_8`, 
+			`DATE_FMT_10`, 
+			`DATE_YEAR`, 
+			`DATE_MONTH`, 
+			`DATE_DAY`, 
+			`DATE_WEEKDAY`, 
+			`DATE_PRE_FMT_8`, 
+			`DATE_PRE_FMT_10`, 
+			`DATE_NEXT_FMT_8`, 
+			`DATE_NEXT_FMT_10`, 
+			`DATE_PREWORK_FMT_8`, 
+			`DATE_PREWORK_FMT_10`, 
+			`DATE_NEXTWORK_FMT_8`, 
+			`DATE_NEXTWORK_FMT_10`
+		FROM
+			CBS_T_CALEN_DATE
+		ORDER BY
+			ID DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO CBS_T_CALEN_DATE (
+			`CALEN_ID`, 
+			`DATE_FMT_8`, 
+			`DATE_FMT_10`, 
+			`DATE_YEAR`, 
+			`DATE_MONTH`, 
+			`DATE_DAY`, 
+			`DATE_WEEKDAY`, 
+			`DATE_PRE_FMT_8`, 
+			`DATE_PRE_FMT_10`, 
+			`DATE_NEXT_FMT_8`, 
+			`DATE_NEXT_FMT_10`, 
+			`DATE_PREWORK_FMT_8`, 
+			`DATE_PREWORK_FMT_10`, 
+			`DATE_NEXTWORK_FMT_8`, 
+			`DATE_NEXTWORK_FMT_10`
+		)
+		VALUES (
+			#{calenId}, 
+			#{dateFmt8}, 
+			#{dateFmt10}, 
+			#{dateYear}, 
+			#{dateMonth}, 
+			#{dateDay}, 
+			#{dateWeekday}, 
+			#{datePreFmt8}, 
+			#{datePreFmt10}, 
+			#{dateNextFmt8}, 
+			#{dateNextFmt10}, 
+			#{datePreworkFmt8}, 
+			#{datePreworkFmt10}, 
+			#{dateNextworkFmt8}, 
+			#{dateNextworkFmt10}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="CbsTCalenDateEntity">
+		SELECT
+			`ID`, 
+			`CALEN_ID`, 
+			`DATE_FMT_8`, 
+			`DATE_FMT_10`, 
+			`DATE_YEAR`, 
+			`DATE_MONTH`, 
+			`DATE_DAY`, 
+			`DATE_WEEKDAY`, 
+			`DATE_PRE_FMT_8`, 
+			`DATE_PRE_FMT_10`, 
+			`DATE_NEXT_FMT_8`, 
+			`DATE_NEXT_FMT_10`, 
+			`DATE_PREWORK_FMT_8`, 
+			`DATE_PREWORK_FMT_10`, 
+			`DATE_NEXTWORK_FMT_8`, 
+			`DATE_NEXTWORK_FMT_10`
+		FROM
+			CBS_T_CALEN_DATE
+		WHERE
+			ID = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE CBS_T_CALEN_DATE
+	 	<set>
+			<if test="calenId != null">`CALEN_ID` = #{calenId}, </if>
+			<if test="dateFmt8 != null">`DATE_FMT_8` = #{dateFmt8}, </if>
+			<if test="dateFmt10 != null">`DATE_FMT_10` = #{dateFmt10}, </if>
+			<if test="dateYear != null">`DATE_YEAR` = #{dateYear}, </if>
+			<if test="dateMonth != null">`DATE_MONTH` = #{dateMonth}, </if>
+			<if test="dateDay != null">`DATE_DAY` = #{dateDay}, </if>
+			<if test="dateWeekday != null">`DATE_WEEKDAY` = #{dateWeekday}, </if>
+			<if test="datePreFmt8 != null">`DATE_PRE_FMT_8` = #{datePreFmt8}, </if>
+			<if test="datePreFmt10 != null">`DATE_PRE_FMT_10` = #{datePreFmt10}, </if>
+			<if test="dateNextFmt8 != null">`DATE_NEXT_FMT_8` = #{dateNextFmt8}, </if>
+			<if test="dateNextFmt10 != null">`DATE_NEXT_FMT_10` = #{dateNextFmt10}, </if>
+			<if test="datePreworkFmt8 != null">`DATE_PREWORK_FMT_8` = #{datePreworkFmt8}, </if>
+			<if test="datePreworkFmt10 != null">`DATE_PREWORK_FMT_10` = #{datePreworkFmt10}, </if>
+			<if test="dateNextworkFmt8 != null">`DATE_NEXTWORK_FMT_8` = #{dateNextworkFmt8}, </if>
+			<if test="dateNextworkFmt10 != null">`DATE_NEXTWORK_FMT_10` = #{dateNextworkFmt10}</if>
+		</set>
+		WHERE
+			ID = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			CBS_T_CALEN_DATE
+		WHERE
+			ID IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="list" resultType="CbsTCalenDateEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`CALEN_ID`, 
+			`DATE_FMT_8`, 
+			`DATE_FMT_10`, 
+			`DATE_YEAR`, 
+			`DATE_MONTH`, 
+			`DATE_DAY`, 
+			`DATE_WEEKDAY`, 
+			`DATE_PRE_FMT_8`, 
+			`DATE_PRE_FMT_10`, 
+			`DATE_NEXT_FMT_8`, 
+			`DATE_NEXT_FMT_10`, 
+			`DATE_PREWORK_FMT_8`, 
+			`DATE_PREWORK_FMT_10`, 
+			`DATE_NEXTWORK_FMT_8`, 
+			`DATE_NEXTWORK_FMT_10`
+		FROM
+			CBS_T_CALEN_DATE
+		<where>
+			`DATE_YEAR` = #{dateYear} AND
+			`DATE_MONTH` = #{dateMonth}
+		</where>
+		ORDER BY
+			DATE_FMT_8 ASC
+	</select>
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+</mapper>

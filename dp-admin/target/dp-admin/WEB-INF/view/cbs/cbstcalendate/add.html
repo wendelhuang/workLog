@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('新增-')"></head>
+<body>
+	<div id="dpLTE" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle formRequired">日历ID</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="日历ID" v-model="cbsTCalenDate.calenId" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">8位日期</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="8位日期" v-model="cbsTCalenDate.dateFmt8" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">10位日期</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="10位日期" v-model="cbsTCalenDate.dateFmt10" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">年</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="年" v-model="cbsTCalenDate.dateYear" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">月</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="月" v-model="cbsTCalenDate.dateMonth" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="日" v-model="cbsTCalenDate.dateDay" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">星期</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="星期" v-model="cbsTCalenDate.dateWeekday" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">前一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="前一自然日" v-model="cbsTCalenDate.datePreFmt8" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">前一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="前一自然日" v-model="cbsTCalenDate.datePreFmt10" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">后一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="后一自然日" v-model="cbsTCalenDate.dateNextFmt8" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">后一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="后一自然日" v-model="cbsTCalenDate.dateNextFmt10" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">前一工作日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="前一工作日" v-model="cbsTCalenDate.datePreworkFmt8" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">前一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="前一自然日" v-model="cbsTCalenDate.datePreworkFmt10" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">后一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="后一自然日" v-model="cbsTCalenDate.dateNextworkFmt8" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">后一自然日</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="后一自然日" v-model="cbsTCalenDate.dateNextworkFmt10" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+    <div th:include="include/footer_js::footer"></div>
+    <script th:src="@{/statics/js/cbs/cbstcalendate/add.js}"></script>
+</body>
+</html>
