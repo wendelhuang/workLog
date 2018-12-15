@@ -126,7 +126,7 @@ public class AESUtil {
 
 	public static void main(String[] args) {
 		System.out.println("key\t\tAESEncode\t\tAESDecode");
-		String[] keys = { "Huangww@211", "root" };
+		String[] keys = { "123456", "root" };
 		for (String key : keys) {
 			System.out.print(key + "\t");
 			String encryptString = aesEncode(key);

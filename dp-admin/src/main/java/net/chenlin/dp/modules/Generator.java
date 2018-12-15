@@ -11,9 +11,9 @@ public class Generator {
 
 	public static void main(String[] args) throws Exception {
 		String jdbcDriver = "com.mysql.jdbc.Driver";
-		String jdbcUrl = "jdbc:mysql://118.89.219.190:3306/dp_pro?useUnicode=true&characterEncoding=utf-8";
+		String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/dp_pro?useUnicode=true&characterEncoding=utf-8";
 		String jdbcUsername = "root";
-		String jdbcPassword = "Huangww@211";
+		String jdbcPassword = "123456";
 
 		String tablePrefix = "CBS_T_CALEN_DAT";
 
