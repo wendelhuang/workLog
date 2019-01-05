@@ -5,57 +5,33 @@
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
 			<tr>
-	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formTitle formRequired">时间</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.bookId" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formTitle formRequired">金额</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.uid" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="金额" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">??</td>
+	            <td class="formTitle formRequired">类别<td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">??</td>
+	            <td class="formTitle formRequired">类型</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="类型" v-model="cbsTBookKeep.outIn" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formTitle formRequired">备注</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.typeId" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">??</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.outIn" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">??</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.remark" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">????</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="????" v-model="cbsTBookKeep.createTime" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">????</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="????" v-model="cbsTBookKeep.updateTime" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="备注" v-model="cbsTBookKeep.remark" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 		</table>

@@ -172,6 +172,7 @@ var vm = new Vue({
 				    type: 'POST',
 					success: function(data) {
 						console.log(data);
+						dialogMsg(data.msg, 'success');
 						vm.load();
 					}
 				});
@@ -191,6 +192,7 @@ var vm = new Vue({
 			    type: 'POST',
 				success: function(data) {
 					console.log(data);
+					dialogMsg(data.msg, 'success');
 					vm.load();
 				}
 			});
@@ -242,6 +244,11 @@ var vm = new Vue({
 			console.log('aaa');
 			console.log(data);
 			console.log(vm.tableData);
+		},
+		rowStyle: function(hash) {
+			if (hash.row.dayOfWeek == '星期六' || hash.row.dayOfWeek == '星期日') {
+				return {'background-color': 'yellow'};
+			}
 		}
 	}
 })

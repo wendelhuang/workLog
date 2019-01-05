@@ -66,7 +66,7 @@ var vm = new Vue({
 			dialogOpen({
 				title: '新增',
 				url: 'cbs/cbstcalendate/add.html?_' + $.now(),
-				width: '420px',
+				width: '320px',
 				height: '350px',
 				yes : function(iframeId) {
 					top.frames[iframeId].vm.acceptClick();
