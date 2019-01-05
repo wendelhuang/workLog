@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('编辑-')"></head>
+</head>
+<body>
+	<div id="dpLTE" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.bookId" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.uid" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??ID</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??ID" v-model="cbsTBookKeep.typeId" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.outIn" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">??</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="??" v-model="cbsTBookKeep.remark" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">????</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="????" v-model="cbsTBookKeep.createTime" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">????</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="????" v-model="cbsTBookKeep.updateTime" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+    <div th:include="include/footer_js::footer"></div>
+    <script th:src="@{/statics/js/cbs/cbstbookkeep/edit.js}"></script>
+</body>
+</html>

@@ -6,9 +6,9 @@
 <body>
 <div id="dpLTE">
 	  <el-table stripe border :data="tableData">
-	    <el-table-column prop="workDate" label="日期" min-wiedth="8%" header-align="center" align="center">
+	    <el-table-column prop="workDate" label="日期" header-align="center" align="center">
 	    </el-table-column>
-	    <el-table-column prop="dayOfWeek" label="星期" min-wiedth="8%" header-align="center" align="center">
+	    <el-table-column prop="dayOfWeek" label="星期" header-align="center" align="center">
 	    </el-table-column>
 	    <el-table-column prop="morning" label="上午" header-align="center" align="left">
 	      <template slot-scope="scope">
@@ -25,7 +25,7 @@
 	        <el-input type="textarea" autosize v-model="scope.row.evening"></el-input>
 	      </template>
 	    </el-table-column>
-	    <el-table-column label="操作" header-align="center" align="center">
+	    <el-table-column label="操作" header-align="center" width="8%" align="center">
 	      <template slot-scope="scope">
 	        <a @click="saveWorkLog(scope.row.id, scope.row.workDate, scope.row.morning, scope.row.afternoon, scope.row.evening)" title="保存"><i class="fa fa-save"></i></a>
 	        <a @click="removeWorkLog(scope.row.id, scope.row.workDate)" title="清空"><i class="fa fa-trash-o"></i></a>

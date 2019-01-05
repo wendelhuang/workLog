@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTBookKeepMapper">
+	
+	<select id="listForPage" resultType="CbsTBookKeepEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`BOOK_ID`, 
+			`UID`, 
+			`KEEP_TIME`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_BOOK_KEEP
+		ORDER BY
+			ID DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO CBS_T_BOOK_KEEP (
+			`BOOK_ID`, 
+			`UID`, 
+			`KEEP_TIME`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		)
+		VALUES (
+			#{bookId}, 
+			#{uid}, 
+			#{keepTime}, 
+			#{money}, 
+			#{typeId}, 
+			#{outIn}, 
+			#{remark}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="CbsTBookKeepEntity">
+		SELECT
+			`ID`, 
+			`BOOK_ID`, 
+			`UID`, 
+			`KEEP_TIME`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_BOOK_KEEP
+		WHERE
+			ID = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE CBS_T_BOOK_KEEP
+	 	<set>
+			<if test="bookId != null">`BOOK_ID` = #{bookId}, </if>
+			<if test="uid != null">`UID` = #{uid}, </if>
+			<if test="keepTime != null">`KEEP_TIME` = #{keepTime}, </if>
+			<if test="money != null">`MONEY` = #{money}, </if>
+			<if test="typeId != null">`TYPE_ID` = #{typeId}, </if>
+			<if test="outIn != null">`OUT_IN` = #{outIn}, </if>
+			<if test="remark != null">`REMARK` = #{remark}, </if>
+			<if test="createTime != null">`CREATE_TIME` = #{createTime}, </if>
+			<if test="updateTime != null">`UPDATE_TIME` = #{updateTime}</if>
+		</set>
+		WHERE
+			ID = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			CBS_T_BOOK_KEEP
+		WHERE
+			ID IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+</mapper>

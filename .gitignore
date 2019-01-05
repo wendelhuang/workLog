@@ -1,2 +1,8 @@
 dp-admin/target
 dp-common/target
+dp-admin/.project
+dp-admin/src/main/java/net/chenlin/dp/modules/Generator.java
+dp-common/.project
+*.project
+*.setting*
+.gitignore
