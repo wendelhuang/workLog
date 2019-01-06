@@ -1,6 +1,20 @@
 /**
  * 编辑-js
  */
+$(function() {
+    initialPage();
+})
+function initialPage() {
+    laydate.render({
+        elem: '#keepTime',
+        type: 'datetime',
+        value: new Date(),
+        isInitValue: true,
+        done: function(value, date, endDate){
+            vm.cbsTBookKeep.keepTime = value;
+        }
+    })
+}
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {

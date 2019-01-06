@@ -1,18 +1,18 @@
 package net.chenlin.dp.modules.cbs.controller;
 
-import java.util.Map;
-
+import net.chenlin.dp.common.annotation.SysLog;
+import net.chenlin.dp.common.entity.Page;
+import net.chenlin.dp.common.entity.R;
+import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
+import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.sys.controller.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import net.chenlin.dp.common.annotation.SysLog;
-import net.chenlin.dp.common.entity.Page;
-import net.chenlin.dp.common.entity.R;
-import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
-import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 
@@ -32,7 +32,8 @@ public class CbsTBookKeepController extends AbstractController {
 	 */
 	@RequestMapping("/list")
 	public Page<CbsTBookKeepEntity> list(@RequestBody Map<String, Object> params) {
-		return cbsTBookKeepService.listCbsTBookKeep(params);
+
+		return cbsTBookKeepService.listCbsTBookKeep(params, getUser());
 	}
 		
 	/**
@@ -43,6 +44,9 @@ public class CbsTBookKeepController extends AbstractController {
 	@SysLog("新增")
 	@RequestMapping("/save")
 	public R save(@RequestBody CbsTBookKeepEntity cbsTBookKeep) {
+		cbsTBookKeep.setUid(getUserId());
+		cbsTBookKeep.setCreateTime(new Date());
+		cbsTBookKeep.setUpdateTime(new Date());
 		return cbsTBookKeepService.saveCbsTBookKeep(cbsTBookKeep);
 	}
 	

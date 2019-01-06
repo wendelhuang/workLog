@@ -50,11 +50,33 @@ function getGrid() {
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {
-		keyword: null
+		keyword: null,
+		tableData: []
 	},
+    mounted: function() {
+        this.load();
+    },
 	methods : {
 		load: function() {
-			$('#dataGrid').bootstrapTable('refresh');
+            $.post({
+                url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({pageSize: 10, pageNumber: 1}),
+                type: 'POST',
+                success: function(data) {
+                	console.log(data);
+                    vm.tableData = data.rows;
+                    var outInFormat = {
+                    	'OUT': '支出',
+						'IN': '收入'
+					};
+                    for(var i = 0; i < vm.tableData.length; i++) {
+						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
+						vm.tableData[i].money = vm.tableData[i].money.toFixed(2);
+					}
+                }
+            });
 		},
 		save: function() {
 			dialogOpen({
@@ -95,6 +117,44 @@ var vm = new Vue({
 			} else {
 			    ids.push(id);
 			}
+            $.RemoveForm({
+                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
+                param: ids,
+                success: function(data) {
+                    vm.load();
+                }
+            });
+		},
+		editBookKeep: function(id) {
+			console.log(id);
+            dialogOpen({
+                title: '编辑',
+                url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
+                width: '420px',
+                height: '350px',
+                success: function(iframeId){
+                    top.frames[iframeId].vm.cbsTBookKeep.id = id;
+                    top.frames[iframeId].vm.setForm();
+                },
+                yes: function(iframeId){
+                    top.frames[iframeId].vm.acceptClick();
+                }
+            });
+		},
+		removeBookKeep: function(batch, id) {
+			console.log(id);
+            var ids = [];
+            if (batch) {
+                var ck = $('#dataGrid').bootstrapTable('getSelections');
+                if (!checkedArray(ck)) {
+                    return false;
+                }
+                $.each(ck, function(idx, item){
+                    ids[idx] = item.id;
+                });
+            } else {
+                ids.push(id);
+            }
             $.RemoveForm({
                 url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
                 param: ids,

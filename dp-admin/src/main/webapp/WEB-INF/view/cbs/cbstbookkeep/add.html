@@ -7,7 +7,7 @@
 			<tr>
 	            <td class="formTitle formRequired">时间</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
+					<input id="keepTime" type="text" class="form-control" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>
@@ -19,19 +19,22 @@
 			<tr>
 	            <td class="formTitle formRequired">类别<td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId">
 	            </td>
         	</tr>
 			<tr>
 	            <td class="formTitle formRequired">类型</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="类型" v-model="cbsTBookKeep.outIn" isvalid="yes" checkexpession="NotNull">
+					<select v-model="cbsTBookKeep.outIn" class="form-control typeSelect" style="width: 150px;">
+						<option value="OUT">支出</option>
+						<option value="IN">收入</option>
+					</select>
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">备注</td>
+	            <td class="formTitle">备注</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="备注" v-model="cbsTBookKeep.remark" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="备注" v-model="cbsTBookKeep.remark">
 	            </td>
         	</tr>
 		</table>
