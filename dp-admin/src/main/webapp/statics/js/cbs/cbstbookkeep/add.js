@@ -4,23 +4,13 @@
 $(function() {
 	initialPage();
 })
-function initialPage() {
-	laydate.render({
-		elem: '#keepTime',
-		type: 'datetime',
-		value: new Date(),
-		isInitValue: true,
-        done: function(value, date, endDate){
-            vm.cbsTBookKeep.keepTime = value;
-        }
-	})
-}
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		cbsTBookKeep: {
 			id: 0,
-			outIn: 'OUT'
+			outIn: 'OUT',
+			keepTime: formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')
 		}
 	},
 	methods : {
@@ -38,3 +28,14 @@ var vm = new Vue({
 		}
 	}
 })
+function initialPage() {
+	laydate.render({
+		elem: '#keepTime',
+		type: 'datetime',
+		value: new Date(),
+		isInitValue: true,
+        done: function(value, date, endDate){
+            vm.cbsTBookKeep.keepTime = value;
+        }
+	})
+}
