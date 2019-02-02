@@ -3,7 +3,7 @@
  */
 
 $(function () {
-	initialPage();
+	//initialPage();
 });
 
 function initialPage() {
@@ -95,21 +95,23 @@ var vm = new Vue({
 	data: {
 		keyword: null,
 		input1: '',
-		tableData: []
+		tableData: [],
+		currentDate: today()
 	},
 	mounted: function() {
 		this.load();
 	},
 	methods : {
-		load: function() {
-			$('#dataGrid').bootstrapTable('refresh');
+		getTableData: function(currentDate, direction) {
 			$.post({
 				url: '../../CBS/T/WORKLOG/list?_' + $.now(),
 				dataType: 'json',
 			    contentType: 'application/json',
-			    data: JSON.stringify({params: {}}),
+			    data: JSON.stringify({'currentDate': currentDate, 'direction': direction}),
 			    type: 'POST',
 				success: function(data) {
+					vm.currentDate = data.currentDate;
+					console.log(vm.currentDate);
 					var weekTrans = {
 						1: '星期一',
 						2: '星期二',
@@ -146,6 +148,15 @@ var vm = new Vue({
 				}
 			});
 		},
+		load: function() {
+			this.getTableData(this.currentDate, 'current');
+		},
+		backward: function() {
+			this.getTableData(this.currentDate, 'backward');
+		},
+		forward: function() {
+			this.getTableData(this.currentDate, 'foreward');
+		},
 		save: function() {
 			dialogOpen({
 				title: '新增',
@@ -171,7 +182,6 @@ var vm = new Vue({
 				    contentType: 'application/json',
 				    type: 'POST',
 					success: function(data) {
-						console.log(data);
 						dialogMsg(data.msg, 'success');
 						vm.load();
 					}
@@ -191,15 +201,12 @@ var vm = new Vue({
 			    contentType: 'application/json',
 			    type: 'POST',
 				success: function(data) {
-					console.log(data);
 					dialogMsg(data.msg, 'success');
 					vm.load();
 				}
 			});
 		},
 		removeWorkLog: function(id, workDate) {
-			console.log('removeWorkLog');
-			console.log(id);
 			if (id != undefined) {
 				this.saveWorkLog(id, workDate, '', '', '');
 			}
