@@ -24,11 +24,19 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="pull-right">
+			<el-pagination layout="prev, pager, next, jumper" :total="total" :current-page.sync="pageNumber" @current-change="getTableData(pageNumber, pageSize)">
+				
+			</el-pagination>
+		</div>
+	</div>
 	<el-table stripe border :data="tableData">
 		<el-table-column prop="keepTime" label="时间" header-align="center" align="center"></el-table-column>
 		<el-table-column prop="outInFormat" label="支出/收入" width="100px" header-align="center" align="center"></el-table-column>
 		<el-table-column prop="typeId" label="类型" header-align="center" align="left"></el-table-column>
-		<el-table-column prop="money" label="金额"  header-align="center" align="right"></el-table-column>
+		<el-table-column prop="money" label="金额"  header-align="center" align="right">
+		</el-table-column>
 		<el-table-column prop="remark" label="备注" header-align="center" align="left"></el-table-column>
 		<el-table-column label="操作" header-align="center" width="50px" align="center">
 			<template slot-scope="scope">
@@ -37,6 +45,13 @@
 			</template>
 		</el-table-column>
 	</el-table>
+	<div class="row">
+		<div class="pull-right">
+			<el-pagination layout="prev, pager, next, jumper" :total="total" :current-page.sync="pageNumber" @current-change="getTableData(pageNumber, pageSize)">
+				
+			</el-pagination>
+		</div>
+	</div>
 </div>
 <div th:include="include/footer_js::footer"></div>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
