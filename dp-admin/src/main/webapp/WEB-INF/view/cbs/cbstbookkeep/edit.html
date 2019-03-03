@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="include/header_css::header('编辑-')"></head>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 <body>
 	<div id="dpLTE" class="container-fluid" v-cloak>
@@ -18,9 +19,14 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="formTitle formRequired">类别<td>
+				<td class="formTitle formRequired">类别</td>
 				<td class="formValue">
-					<input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId">
+					<el-select v-model='cbsTBookKeep.typeId' placeholder='请选择类别'>
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+							<span style="float: left">{{item.label}}</span>
+							<span style="float: right"><i :class="item.icon"></i></span>
+						</el-option>
+					</el-select>
 				</td>
 			</tr>
 			<tr>
@@ -41,6 +47,7 @@
 		</table>
 	</div>
     <div th:include="include/footer_js::footer"></div>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script th:src="@{/statics/js/cbs/cbstbookkeep/edit.js}"></script>
 </body>
 </html>

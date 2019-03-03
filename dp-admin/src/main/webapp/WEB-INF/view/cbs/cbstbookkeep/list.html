@@ -33,9 +33,24 @@
 	</div>
 	<el-table stripe border :data="tableData">
 		<el-table-column prop="keepTime" label="时间" header-align="center" align="center"></el-table-column>
-		<el-table-column prop="outInFormat" label="支出/收入" width="100px" header-align="center" align="center"></el-table-column>
-		<el-table-column prop="typeId" label="类型" header-align="center" align="left"></el-table-column>
+		<el-table-column prop="outInFormat" label="支出/收入" width="100px" header-align="center" align="center">
+			<template slot-scope="scope">
+				<span style="background-color: #28a745;" v-if="scope.row.outIn == 'OUT'" class="badge">{{scope.row.outInFormat}}</span>
+				<span style="background-color: #dc3545;" v-else class="badge">{{scope.row.outInFormat}}</span>
+			</template>
+		</el-table-column>
+		<el-table-column prop="typeId" label="类型" header-align="center" align="left">
+			<template slot-scope="scope">
+				<!-- <i :class="cbsTKeepType[scope.row.typeId].typeIcon">{{cbsTKeepType[scope.row.typeId].typeName}}</i> -->
+				<i :class="scope.row.typeIcon"></i>&nbsp;{{scope.row.typeName}}
+				<!-- <span>{{JSON.stringify(scope.row)}}</span> -->
+			</template>
+		</el-table-column>
 		<el-table-column prop="money" label="金额"  header-align="center" align="right">
+			<template slot-scope="scope">
+				<span style="background-color: #28a745;" v-if="scope.row.money < 0" class="badge">{{scope.row.money}}</span>
+				<span style="background-color: #dc3545;" v-else class="badge">{{scope.row.money}}</span>
+			</template>
 		</el-table-column>
 		<el-table-column prop="remark" label="备注" header-align="center" align="left"></el-table-column>
 		<el-table-column label="操作" header-align="center" width="50px" align="center">

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('编辑-')"></head>
+</head>
+<body>
+	<div id="dpLTE" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle formRequired">类别名称</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="类别名称" v-model="cbsTKeepType.typeName" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">类别图标</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="类别图标" v-model="cbsTKeepType.typeIcon" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+    <div th:include="include/footer_js::footer"></div>
+    <script th:src="@{/statics/js/cbs/cbstkeeptype/edit.js}"></script>
+</body>
+</html>

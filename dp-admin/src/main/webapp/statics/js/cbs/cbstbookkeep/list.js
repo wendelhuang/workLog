@@ -54,15 +54,14 @@ var vm = new Vue({
 		tableData: [],
 		pageNumber: 1,
 		pageSize: 10,
-		total: 0
+		total: 0,
+		cbsTKeepType: {}
 	},
     mounted: function() {
         this.load();
     },
 	methods : {
 		getTableData: function(pageNumber, pageSize) {
-			console.log(pageNumber);
-			console.log(pageSize);
 			$.post({
                 url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
                 dataType: 'json',
@@ -70,14 +69,27 @@ var vm = new Vue({
                 data: JSON.stringify({pageSize: pageSize, pageNumber: pageNumber}),
                 type: 'POST',
                 success: function(data) {
-                    vm.tableData = data.rows;
-                    vm.total = data.total;
+                	console.log(data);
+                	var keepTypeData = data.cbsTKeepType;
+                    vm.tableData = data.cbsTBookKeep.rows;
+                    vm.total = data.cbsTBookKeep.total;
+                    
+                    for(var i = 0; i < keepTypeData.length; i++) {
+                    	vm.cbsTKeepType[keepTypeData[i].id] = keepTypeData[i];
+                    }
+                    
                     var outInFormat = {
                     	'OUT': '支出',
 						'IN': '收入'
 					};
                     for(var i = 0; i < vm.tableData.length; i++) {
 						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
+						vm.tableData[i].typeIcon = '';
+						vm.tableData[i].typeName = '';
+						if (vm.tableData[i].typeId != undefined) {
+							vm.tableData[i].typeIcon = vm.cbsTKeepType[vm.tableData[i].typeId].typeIcon;
+							vm.tableData[i].typeName = vm.cbsTKeepType[vm.tableData[i].typeId].typeName;
+						}
 				        var f = Math.round(vm.tableData[i].money*100)/100;  
 				        var s = f.toString();  
 				        var rs = s.indexOf('.');  
