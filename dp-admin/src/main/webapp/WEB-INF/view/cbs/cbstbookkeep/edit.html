@@ -9,13 +9,13 @@
 			<tr>
 				<td class="formTitle formRequired">时间</td>
 				<td class="formValue">
-					<input id="keepTime" type="text" class="form-control" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
+					<el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input>
 				</td>
 			</tr>
 			<tr>
 				<td class="formTitle formRequired">金额</td>
 				<td class="formValue">
-					<input type="text" class="form-control" placeholder="金额" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull">
+					<el-input placeholder="0.00" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull"></el-input>
 				</td>
 			</tr>
 			<tr>
@@ -32,16 +32,16 @@
 			<tr>
 				<td class="formTitle formRequired">类型</td>
 				<td class="formValue">
-					<select v-model="cbsTBookKeep.outIn" class="form-control typeSelect" style="width: 150px;">
-						<option value="OUT">支出</option>
-						<option value="IN">收入</option>
-					</select>
+					<el-select v-model='cbsTBookKeep.outIn' placeholder='请选择类型'>
+						<el-option key="OUT" label="支出" value="OUT"></el-option>
+						<el-option key="IN" label="收入" value="IN"></el-option>
+					</el-select>
 				</td>
 			</tr>
 			<tr>
 				<td class="formTitle">备注</td>
 				<td class="formValue">
-					<input type="text" class="form-control" placeholder="备注" v-model="cbsTBookKeep.remark">
+					<el-input placeholder="备注" v-model="cbsTBookKeep.remark"></el-input>
 				</td>
 			</tr>
 		</table>
