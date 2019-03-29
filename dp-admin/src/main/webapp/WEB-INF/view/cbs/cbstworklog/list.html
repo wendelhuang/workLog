@@ -5,6 +5,18 @@
 </head>
 <body>
 <div id="dpLTE">
+      <div class="row">
+		<div class="col-md-4 form-inline pull-left">
+		</div>
+		<div class="col-md-8">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+					<a class="btn btn-default" @click="backward"><i class="fa fa-backward"></i>&nbsp;往后</a>
+					<a class="btn btn-default" @click="forward">往前&nbsp;<i class="fa fa-forward"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
 	  <el-table border :row-style="rowStyle" :data="tableData">
 	    <el-table-column prop="workDate" label="日期" width="100px" header-align="center" align="center">
 	    </el-table-column>
@@ -32,6 +44,18 @@
 	      </template>
 	    </el-table-column>
 	  </el-table>
+	  <div class="row">
+		<div class="col-md-4 form-inline pull-left">
+		</div>
+		<div class="col-md-8">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+					<a class="btn btn-default" @click="backward"><i class="fa fa-backward"></i>&nbsp;往后</a>
+					<a class="btn btn-default" @click="forward">往前&nbsp;<i class="fa fa-forward"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <div th:include="include/footer_js::footer"></div>
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>

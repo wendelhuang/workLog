@@ -51,32 +51,65 @@ var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		keyword: null,
-		tableData: []
+		tableData: [],
+		pageNumber: 1,
+		pageSize: 10,
+		total: 0,
+		cbsTKeepType: {}
 	},
     mounted: function() {
         this.load();
     },
 	methods : {
-		load: function() {
-            $.post({
+		getTableData: function(pageNumber, pageSize) {
+			$.post({
                 url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({pageSize: 10, pageNumber: 1}),
+                data: JSON.stringify({pageSize: pageSize, pageNumber: pageNumber}),
                 type: 'POST',
                 success: function(data) {
                 	console.log(data);
-                    vm.tableData = data.rows;
+                	var keepTypeData = data.cbsTKeepType;
+                    vm.tableData = data.cbsTBookKeep.rows;
+                    vm.total = data.cbsTBookKeep.total;
+                    
+                    for(var i = 0; i < keepTypeData.length; i++) {
+                    	vm.cbsTKeepType[keepTypeData[i].id] = keepTypeData[i];
+                    }
+                    
                     var outInFormat = {
                     	'OUT': '支出',
 						'IN': '收入'
 					};
                     for(var i = 0; i < vm.tableData.length; i++) {
 						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
-						vm.tableData[i].money = vm.tableData[i].money.toFixed(2);
+						vm.tableData[i].typeIcon = '';
+						vm.tableData[i].typeName = '';
+						if (vm.tableData[i].typeId != undefined) {
+							vm.tableData[i].typeIcon = vm.cbsTKeepType[vm.tableData[i].typeId].typeIcon;
+							vm.tableData[i].typeName = vm.cbsTKeepType[vm.tableData[i].typeId].typeName;
+						}
+				        var f = Math.round(vm.tableData[i].money*100)/100;  
+				        var s = f.toString();  
+				        var rs = s.indexOf('.');  
+				        if (rs < 0) {  
+				            rs = s.length;  
+				            s += '.';  
+				        }  
+				        while (s.length <= rs + 2) {  
+				            s += '0';  
+				        }
+						vm.tableData[i].money = s;
+						if (vm.tableData[i].outIn == 'OUT') {
+							vm.tableData[i].money = '-' + s;
+						}
 					}
                 }
             });
+		},
+		load: function() {
+            this.getTableData(this.pageNumber, this.pageSize);
 		},
 		save: function() {
 			dialogOpen({

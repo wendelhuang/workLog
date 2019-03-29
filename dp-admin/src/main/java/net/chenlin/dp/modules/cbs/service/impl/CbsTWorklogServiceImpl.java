@@ -1,5 +1,7 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -39,14 +41,30 @@ public class CbsTWorklogServiceImpl implements CbsTWorklogService {
 	 */
 	@Override
 	public R listCbsTWorklog(Map<String, Object> params, SysUserEntity user) {
-		Calendar todayCalen = Calendar.getInstance();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar currentCalen = Calendar.getInstance();
+		if (params.get("currentDate") != null) {
+			try {
+				currentCalen.setTime(simpleDateFormat.parse(params.get("currentDate").toString()));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		if (params.get("direction") != null) {
+			if ("backward".equals(params.get("direction").toString())) {
+				currentCalen.add(Calendar.MONTH, -1);
+			} else if ("foreward".equals(params.get("direction").toString())) {
+				currentCalen.add(Calendar.MONTH, 1);
+			}
+		}
 		List<CbsTCalenDateEntity> calenDateEntities = cbsTCalenDateService
-				.listByYearAndMonth(todayCalen.get(Calendar.YEAR), todayCalen.get(Calendar.MONTH) + 1);
+				.listByYearAndMonth(currentCalen.get(Calendar.YEAR), currentCalen.get(Calendar.MONTH) + 1);
 		List<String> dates = calenDateEntities.stream().map(d -> d.getDateFmt10()).collect(Collectors.toList());
 		List<CbsTWorklogEntity> worklogEntities = listByDate(user, dates);
 		R r = R.ok();
 		r.put("calenDate", calenDateEntities);
 		r.put("workLog", worklogEntities);
+		r.put("currentDate", simpleDateFormat.format(currentCalen.getTime()));
 		return r;
 	}
 

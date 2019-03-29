@@ -1,45 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="include/header_css::header('新增-')"></head>
+<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <body>
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
 			<tr>
 	            <td class="formTitle formRequired">时间</td>
 	            <td class="formValue">
-					<input id="keepTime" type="text" class="form-control" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull">
+					<el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input>
 	            </td>
         	</tr>
 			<tr>
 	            <td class="formTitle formRequired">金额</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="金额" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull">
+					<el-input placeholder="0.00" v-model="cbsTBookKeep.money" isvalid="yes" checkexpession="NotNull"></el-input>
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired">类别<td>
+	            <td class="formTitle formRequired">类别</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId">
+					<!-- <input type="text" class="form-control" placeholder="类别" v-model="cbsTBookKeep.typeId"> -->
+					<!-- <select v-model="cbsTBookKeep.typeId" class="form-control typeSelect">
+						<option value="OUT">支出</option>
+						<option value="IN">收入</option>
+					</select> -->
+					<el-select v-model='cbsTBookKeep.typeId' placeholder='请选择类别'>
+						<el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+							<span style="float: left">{{item.label}}</span>
+							<span style="float: right"><i :class="item.icon"></i></span>
+						</el-option>
+					</el-select>
 	            </td>
         	</tr>
 			<tr>
 	            <td class="formTitle formRequired">类型</td>
 	            <td class="formValue">
-					<select v-model="cbsTBookKeep.outIn" class="form-control typeSelect" style="width: 150px;">
-						<option value="OUT">支出</option>
-						<option value="IN">收入</option>
-					</select>
+					<el-select v-model='cbsTBookKeep.outIn' placeholder='请选择类型'>
+						<el-option key="OUT" label="支出" value="OUT"></el-option>
+						<el-option key="IN" label="收入" value="IN"></el-option>
+					</el-select>
 	            </td>
         	</tr>
 			<tr>
 	            <td class="formTitle">备注</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="备注" v-model="cbsTBookKeep.remark">
+					<el-input placeholder="备注" v-model="cbsTBookKeep.remark"></el-input>
 	            </td>
         	</tr>
 		</table>
 	</div>
     <div th:include="include/footer_js::footer"></div>
+	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script th:src="@{/statics/js/cbs/cbstbookkeep/add.js}"></script>
 </body>
 </html>

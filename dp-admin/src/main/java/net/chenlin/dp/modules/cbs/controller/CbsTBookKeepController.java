@@ -1,7 +1,6 @@
 package net.chenlin.dp.modules.cbs.controller;
 
 import net.chenlin.dp.common.annotation.SysLog;
-import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
@@ -21,23 +20,25 @@ import java.util.Map;
 @RestController
 @RequestMapping("/CBS/T/BOOK/KEEP")
 public class CbsTBookKeepController extends AbstractController {
-	
+
 	@Autowired
 	private CbsTBookKeepService cbsTBookKeepService;
-	
+
 	/**
 	 * 列表
+	 * 
 	 * @param params
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public Page<CbsTBookKeepEntity> list(@RequestBody Map<String, Object> params) {
+	public R list(@RequestBody Map<String, Object> params) {
 
 		return cbsTBookKeepService.listCbsTBookKeep(params, getUser());
 	}
-		
+
 	/**
 	 * 新增
+	 * 
 	 * @param cbsTBookKeep
 	 * @return
 	 */
@@ -49,9 +50,10 @@ public class CbsTBookKeepController extends AbstractController {
 		cbsTBookKeep.setUpdateTime(new Date());
 		return cbsTBookKeepService.saveCbsTBookKeep(cbsTBookKeep);
 	}
-	
+
 	/**
 	 * 根据id查询详情
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -59,9 +61,10 @@ public class CbsTBookKeepController extends AbstractController {
 	public R getById(@RequestBody Long id) {
 		return cbsTBookKeepService.getCbsTBookKeepById(id);
 	}
-	
+
 	/**
 	 * 修改
+	 * 
 	 * @param cbsTBookKeep
 	 * @return
 	 */
@@ -70,9 +73,10 @@ public class CbsTBookKeepController extends AbstractController {
 	public R update(@RequestBody CbsTBookKeepEntity cbsTBookKeep) {
 		return cbsTBookKeepService.updateCbsTBookKeep(cbsTBookKeep);
 	}
-	
+
 	/**
 	 * 删除
+	 * 
 	 * @param id
 	 * @return
 	 */

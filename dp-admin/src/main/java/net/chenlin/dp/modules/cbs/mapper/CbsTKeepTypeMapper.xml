@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTKeepTypeMapper">
+	
+	<select id="listForPage" resultType="CbsTKeepTypeEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`TYPE_NAME`, 
+			`TYPE_ICON`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_KEEP_TYPE
+		<where>
+		  <if test="uid != null">`UID` = #{uid}</if>
+		</where>
+		ORDER BY
+			ID DESC
+	</select>
+	
+	<select id="list" resultType="CbsTKeepTypeEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`TYPE_NAME`, 
+			`TYPE_ICON`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_KEEP_TYPE
+		<where>
+		  <if test="uid != null">`UID` = #{uid}</if>
+		</where>
+		ORDER BY
+			ID DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO CBS_T_KEEP_TYPE (
+			`UID`, 
+			`TYPE_NAME`, 
+			`TYPE_ICON`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		)
+		VALUES (
+			#{uid}, 
+			#{typeName}, 
+			#{typeIcon}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="CbsTKeepTypeEntity">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`TYPE_NAME`, 
+			`TYPE_ICON`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_KEEP_TYPE
+		WHERE
+			ID = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE CBS_T_KEEP_TYPE
+	 	<set>
+			<if test="uid != null">`UID` = #{uid}, </if>
+			<if test="typeName != null">`TYPE_NAME` = #{typeName}, </if>
+			<if test="typeIcon != null">`TYPE_ICON` = #{typeIcon}, </if>
+			<if test="createTime != null">`CREATE_TIME` = #{createTime}, </if>
+			<if test="updateTime != null">`UPDATE_TIME` = #{updateTime}</if>
+		</set>
+		WHERE
+			ID = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			CBS_T_KEEP_TYPE
+		WHERE
+			ID IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+</mapper>

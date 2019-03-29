@@ -19,8 +19,13 @@ var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		cbsTBookKeep: {
-			id: 0
-		}
+			id: 0,
+			typeId: ''
+		},
+		options: []
+	},
+	mounted: function() {
+		this.loadKeepType();
 	},
 	methods : {
 		setForm: function() {
@@ -43,6 +48,28 @@ var vm = new Vue({
 		    		$.currentIframe().vm.load();
 		    	}
 		    });
+		},
+		loadKeepType: function() {
+            $.post({
+                url: '../../CBS/T/KEEP/TYPE/listAll?_' + $.now(),
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({}),
+                type: 'POST',
+                success: function(data) {
+                    vm.tableData = data.data;
+                    for(var i = 0; i < vm.tableData.length; i++) {
+                    	if (i == 0) {
+                    		vm.cbsTBookKeep.typeId = vm.tableData[i].id;
+                    	}
+                    	vm.options.push({
+                    		value: vm.tableData[i].id,
+                    		label: vm.tableData[i].typeName,
+                    		icon: vm.tableData[i].typeIcon
+                    	})
+                    }
+                }
+            });
 		}
 	}
 })
