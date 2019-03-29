@@ -81,5 +81,14 @@ public class CbsTBookKeepController extends AbstractController {
 	public R batchRemove(@RequestBody Long[] id) {
 		return cbsTBookKeepService.batchRemove(id);
 	}
-	
+
+
+	/**
+	 *
+	 */
+	@SysLog("report-balance")
+	@RequestMapping("/report-balance")
+	public R reportBalance(@RequestBody String startDate, @RequestBody String endDate) {
+		return cbsTBookKeepService.reportBalance(startDate, endDate);
+	}
 }

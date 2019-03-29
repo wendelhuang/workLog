@@ -81,4 +81,9 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 		return CommonUtils.msg(id, count);
 	}
 
+
+	R reportBalance(String startDate, String endDate) {
+		return
+	}
+
 }

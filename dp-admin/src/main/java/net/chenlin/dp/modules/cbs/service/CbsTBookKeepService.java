@@ -47,5 +47,6 @@ public interface CbsTBookKeepService {
      * @return
      */
 	R batchRemove(Long[] id);
-	
+
+	R reportBalance(String startDate, String endDate);
 }

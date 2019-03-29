@@ -112,6 +112,32 @@
 			KEEP_TIME DESC
 	</select>
 
+
+	<select id="listReportBalance" resultType="java.util.HashMap">
+		select n.DTE, n.OUT_IN, n.C, n.S, sum(m.S) as SS from
+		(
+		select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+		(
+		select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+		(select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 >= #{startDate} and DATE_FMT_10 &lt;= #{endDate} ) calen left join
+		( select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+		(select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP  where uid = 1 and OUT_IN = #{outIn}
+		and date_format(keep_time, '%Y-%m-%d') >= #{startDate} and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate} ) keep group by keep.DTE ) keep2 on calen.DATE_FMT_10 = keep2.DTE
+		) keep3
+		) m,
+		(
+		select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+		(
+		select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+		(select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 >= #{startDate} and DATE_FMT_10 &lt;= #{endDate} ) calen left join
+		( select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+		(select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP  where uid = 1 and OUT_IN = #{outIn}
+		and date_format(keep_time, '%Y-%m-%d') >= #{startDate} and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate} ) keep group by keep.DTE ) keep2 on calen.DATE_FMT_10 = keep2.DTE
+		) keep3
+		) n where m.DTE &lt;= n.DTE group by n.DTE, n.OUT_IN, n.C, n.S order by n.DTE
+
+	</select>
+
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 
 </mapper>
