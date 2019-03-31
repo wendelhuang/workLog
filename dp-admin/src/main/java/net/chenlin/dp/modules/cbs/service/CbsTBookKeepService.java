@@ -1,10 +1,10 @@
 package net.chenlin.dp.modules.cbs.service;
 
+import java.util.Map;
+
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
-
-import java.util.Map;
 
 /**
  * 
@@ -52,6 +52,6 @@ public interface CbsTBookKeepService {
 	 */
 	R batchRemove(Long[] id);
 
-	R reportBalance(String startDate, String endDate);
+	R reportBalance(Long uid, String startDate, String endDate);
 
 }

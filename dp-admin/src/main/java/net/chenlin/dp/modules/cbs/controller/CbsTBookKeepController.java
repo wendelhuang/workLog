@@ -1,17 +1,18 @@
 package net.chenlin.dp.modules.cbs.controller;
 
-import net.chenlin.dp.common.annotation.SysLog;
-import net.chenlin.dp.common.entity.R;
-import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
-import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
-import net.chenlin.dp.modules.sys.controller.AbstractController;
+import java.util.Date;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.Map;
+import net.chenlin.dp.common.annotation.SysLog;
+import net.chenlin.dp.common.entity.R;
+import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
+import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
+import net.chenlin.dp.modules.sys.controller.AbstractController;
 
 /**
  * 
@@ -86,13 +87,13 @@ public class CbsTBookKeepController extends AbstractController {
 		return cbsTBookKeepService.batchRemove(id);
 	}
 
-
 	/**
 	 *
 	 */
 	@SysLog("report-balance")
 	@RequestMapping("/report-balance")
-	public R reportBalance(@RequestBody String startDate, @RequestBody String endDate) {
-		return cbsTBookKeepService.reportBalance(startDate, endDate);
+	public R reportBalance(@RequestBody Map<String, Object> params) {
+		return cbsTBookKeepService.reportBalance(getUserId(), params.get("startDate").toString(),
+				params.get("endDate").toString());
 	}
 }

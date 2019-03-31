@@ -98,9 +98,11 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 		return CommonUtils.msg(id, count);
 	}
 
-
-	R reportBalance(String startDate, String endDate) {
-		return
+	@Override
+	public R reportBalance(Long uid, String startDate, String endDate) {
+		List<Map<String, Object>> out = cbsTBookKeepMapper.listReportBalance(uid, startDate, endDate, "OUT");
+		List<Map<String, Object>> in = cbsTBookKeepMapper.listReportBalance(uid, startDate, endDate, "IN");
+		return R.ok().put("out", out).put("in", in);
 	}
 
 }
