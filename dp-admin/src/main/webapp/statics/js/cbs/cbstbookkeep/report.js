@@ -52,7 +52,7 @@ var vm = new Vue({
 	data: {
 		keyword: null,
 		tableData: [],
-        dateRange: ''
+        dateRange: [countDay(-365), today()]
 	},
     mounted: function() {
         //this.load();
@@ -60,51 +60,38 @@ var vm = new Vue({
     },
 	methods : {
 		load: function() {
-            $.post({
-                url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({pageSize: 10, pageNumber: 1}),
-                type: 'POST',
-                success: function(data) {
-                	console.log(data);
-                    vm.tableData = data.rows;
-                    var outInFormat = {
-                    	'OUT': '支出',
-						'IN': '收入'
-					};
-                    for(var i = 0; i < vm.tableData.length; i++) {
-						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
-						vm.tableData[i].money = vm.tableData[i].money.toFixed(2);
-					}
-                }
-            });
+            this.loadBalance();
 		},
 		loadBalance: function() {
+		    console.log('loadBalance: ' + this.dateRange[0] + ' - ' + this.dateRange[1]);
+
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('report'));
+            myChart.showLoading({
+                text: '数据努力加载中...'
+            })
 			$.post({
                 url: '../../CBS/T/BOOK/KEEP/report-balance?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({startDate: '2019-01-01', endDate: '2019-03-30'}),
+                data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
                 type: 'POST',
                 success: function(data) {
                 	
-                	var dates = $.map(inData, function(e, i) {
+                	var dates = $.map(data['in'], function(e, i) {
                 		return e['DTE'];
                 	});
                 	
                 	var outData = $.map(data['out'], function(e, i) {
-                		return e['SS'];
+                		return e['SS'].toFixed(2);
                 	});
                 	var inData = $.map(data['in'], function(e, i) {
-                		return e['SS'];
+                		return e['SS'].toFixed(2);
                 	});
                 	var balance = [];
                 	for(var i = 0; i < inData.length; i++) {
                 		balance.push((inData[i]-outData[i]).toFixed(2));
                 	}
-        			// 基于准备好的dom，初始化echarts实例
-                    var myChart = echarts.init(document.getElementById('report'));
 
                     // 指定图表的配置项和数据
                     var option = {
@@ -113,53 +100,32 @@ var vm = new Vue({
                         },
                         tooltip: {},
                         legend: {
-                            data:['日期']
+                            data:['支出', '收入', '余额']
                         },
                         xAxis: {
-                            data: dates,
-                            axisLabel: {
-                                interval: 0
-                            }
+                            data: dates
                         },
                         yAxis: {
                         },
                         dataZoom: [{
                             type: 'slider',
-                            show: true,
-                            xAxisIndex: [0]
+                            showDetail: false
                         }],
                         series: [{
                             name: '支出',
                             type: 'line',
-                            data: outData,
-                            lineStyle: {
-                            	normal: {
-                            		color: 'green'
-                            	}
-                            },
-                            symbol: 'circle',
-                            showSymbol: false
+                            data: outData
                         },{
                         	name: '收入',
                             type: 'line',
-                            data: inData,
-                            lineStyle: {
-                            	normal: {
-                            		color: 'red'
-                            	}
-                            }
+                            data: inData
                         },{
                         	name: '余额',
                             type: 'bar',
-                            data: balance,
-                            lineStyle: {
-                            	normal: {
-                            		color: 'yellow'
-                            	}
-                            }
+                            data: balance
                         }]
                     };
-
+                    myChart.hideLoading();
                     // 使用刚指定的配置项和数据显示图表。
                     myChart.setOption(option);
                 }
@@ -250,6 +216,21 @@ var vm = new Vue({
                     vm.load();
                 }
             });
-		}
+		},
+        selectDateRange: function(range) {
+		    console.log(range);
+		    if (range == '3month') {
+		        this.dateRange = [countDay(-90), today()];
+            }else if (range == '6month'){
+                this.dateRange = [countDay(-180), today()];
+            }else if (range == '1year') {
+                this.dateRange = [countDay(-365), today()];
+            }else if (range == 'all') {
+                this.dateRange = ['1970-01-01', today()];
+            }else if (range == 'thisyear') {
+                this.dateRange = ['' + new Date().getFullYear() + '-01-01', today()];
+            }
+            this.load();
+        }
 	}
 })

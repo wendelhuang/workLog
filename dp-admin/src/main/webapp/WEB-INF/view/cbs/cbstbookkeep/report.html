@@ -26,13 +26,13 @@
 	</div>
 	<div class="row">
 		<el-button-group>
-			<el-button type="primary" size="medium">三个月</el-button>
-			<el-button type="primary" size="medium">六个月</el-button>
-			<el-button type="primary" size="medium">一年</el-button>
-			<el-button type="primary" size="medium">所有</el-button>
-			<el-button type="primary" size="medium">今年以来</el-button>
+			<el-button type="primary" size="medium" @click="selectDateRange('3month')">三个月</el-button>
+			<el-button type="primary" size="medium" @click="selectDateRange('6month')">六个月</el-button>
+			<el-button type="primary" size="medium" @click="selectDateRange('1year')">一年</el-button>
+			<el-button type="primary" size="medium" @click="selectDateRange('all')">所有</el-button>
+			<el-button type="primary" size="medium" @click="selectDateRange('thisyear')">今年以来</el-button>
 		</el-button-group>
-		<el-date-picker v-model="dateRange" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期">
+		<el-date-picker v-model="dateRange" @change="selectDateRange('any')" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" format="yyyy-MM-dd" value-format="yyyy-MM-dd">
 		</el-date-picker>
 	</div>
 	<div class="row" id="report" style="width: 600px;height: 400px;">
