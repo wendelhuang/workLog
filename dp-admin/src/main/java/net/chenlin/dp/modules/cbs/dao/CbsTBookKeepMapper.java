@@ -19,6 +19,8 @@ import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 public interface CbsTBookKeepMapper extends BaseMapper<CbsTBookKeepEntity> {
 	List<CbsTBookKeepEntity> listUserForPage(Page<CbsTBookKeepEntity> page, Query query);
 
+	List<CbsTBookKeepEntity> listUser(Query query);
+
 	List<Map<String, Object>> listReportBalance(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
 }

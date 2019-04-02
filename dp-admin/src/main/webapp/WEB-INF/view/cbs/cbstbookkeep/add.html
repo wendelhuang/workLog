@@ -8,7 +8,8 @@
 			<tr>
 	            <td class="formTitle formRequired">时间</td>
 	            <td class="formValue">
-					<el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input>
+					<!-- <el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input> -->
+					<el-date-picker placeholder="时间" type="datetime" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpression="NotNull"></el-date-picker>
 	            </td>
         	</tr>
 			<tr>

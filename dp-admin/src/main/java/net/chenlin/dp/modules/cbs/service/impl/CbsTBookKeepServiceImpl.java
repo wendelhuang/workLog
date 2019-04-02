@@ -38,14 +38,20 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 	@Override
 	public R listCbsTBookKeep(Map<String, Object> params, SysUserEntity sysUserEntity) {
 		params.put("userId", sysUserEntity.getUserId());
+		R r = R.ok();
 		Query query = new Query(params);
-		Page<CbsTBookKeepEntity> page = new Page<>(query);
-		cbsTBookKeepMapper.listUserForPage(page, query);
+		if (params.get("pageSize") != null) {
+			Page<CbsTBookKeepEntity> page = new Page<>(query);
+			cbsTBookKeepMapper.listUserForPage(page, query);
+			r.put("cbsTBookKeep", page);
+		} else {
+			List<CbsTBookKeepEntity> list = cbsTBookKeepMapper.listUser(query);
+			r.put("cbsTBookKeep", list);
+		}
 
 		List<CbsTKeepTypeEntity> cbsTKeepTypeEntities = cbsTKeepTypeServiceImpl
 				.listAllCbsTKeepTypeByUser(sysUserEntity);
-		R r = R.ok();
-		r.put("cbsTBookKeep", page);
+
 		r.put("cbsTKeepType", cbsTKeepTypeEntities);
 		return r;
 	}

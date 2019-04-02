@@ -1,9 +1,9 @@
 /**
  * 新增-js
  */
-$(function() {
+/*$(function() {
 	initialPage();
-})
+})*/
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {
@@ -39,7 +39,6 @@ var vm = new Vue({
                 data: JSON.stringify({}),
                 type: 'POST',
                 success: function(data) {
-                	console.log(data);
                     vm.tableData = data.data;
                     for(var i = 0; i < vm.tableData.length; i++) {
                     	if (i == 0) {
@@ -56,7 +55,7 @@ var vm = new Vue({
 		}
 	}
 })
-function initialPage() {
+/*function initialPage() {
 	laydate.render({
 		elem: '#keepTime',
 		type: 'datetime',
@@ -65,5 +64,6 @@ function initialPage() {
         done: function(value, date, endDate){
             vm.cbsTBookKeep.keepTime = value;
         }
-	})
+	});
 }
+*/

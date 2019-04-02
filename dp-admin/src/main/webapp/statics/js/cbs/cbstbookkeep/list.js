@@ -69,7 +69,6 @@ var vm = new Vue({
                 data: JSON.stringify({pageSize: pageSize, pageNumber: pageNumber}),
                 type: 'POST',
                 success: function(data) {
-                	console.log(data);
                 	var keepTypeData = data.cbsTKeepType;
                     vm.tableData = data.cbsTBookKeep.rows;
                     vm.total = data.cbsTBookKeep.total;
@@ -159,7 +158,6 @@ var vm = new Vue({
             });
 		},
 		editBookKeep: function(id) {
-			console.log(id);
             dialogOpen({
                 title: '编辑',
                 url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
@@ -175,7 +173,6 @@ var vm = new Vue({
             });
 		},
 		removeBookKeep: function(batch, id) {
-			console.log(id);
             var ids = [];
             if (batch) {
                 var ck = $('#dataGrid').bootstrapTable('getSelections');

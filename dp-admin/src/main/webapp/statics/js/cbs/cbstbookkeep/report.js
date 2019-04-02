@@ -52,7 +52,7 @@ var vm = new Vue({
 	data: {
 		keyword: null,
 		tableData: [],
-        dateRange: [countDay(-365), today()]
+        dateRange: [countDay(-90), today()]
 	},
     mounted: function() {
         //this.load();
@@ -67,6 +67,52 @@ var vm = new Vue({
 
             // 基于准备好的dom，初始化echarts实例
             var myChart = echarts.init(document.getElementById('report'));
+            myChart.on('click', function(params) {
+            	var dte = params.name;
+            	$.post({
+                    url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({startDate: dte, endDate: dte}),
+                    type: 'POST',
+                    success: function(data) {
+                    	var keepTypeData = data.cbsTKeepType;
+                        vm.tableData = data.cbsTBookKeep;
+                        
+                        var cbsTKeepType = {};
+                        for(var i = 0; i < keepTypeData.length; i++) {
+                        	cbsTKeepType[keepTypeData[i].id] = keepTypeData[i];
+                        }
+                        var outInFormat = {
+                        	'OUT': '支出',
+    						'IN': '收入'
+    					};
+                        for(var i = 0; i < vm.tableData.length; i++) {
+    						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
+    						vm.tableData[i].typeIcon = '';
+    						vm.tableData[i].typeName = '';
+    						if (vm.tableData[i].typeId != undefined) {
+    							vm.tableData[i].typeIcon = cbsTKeepType[vm.tableData[i].typeId].typeIcon;
+    							vm.tableData[i].typeName = cbsTKeepType[vm.tableData[i].typeId].typeName;
+    						}
+    				        var f = Math.round(vm.tableData[i].money*100)/100;  
+    				        var s = f.toString();  
+    				        var rs = s.indexOf('.');  
+    				        if (rs < 0) {  
+    				            rs = s.length;  
+    				            s += '.';  
+    				        }  
+    				        while (s.length <= rs + 2) {  
+    				            s += '0';  
+    				        }
+    						vm.tableData[i].money = s;
+    						if (vm.tableData[i].outIn == 'OUT') {
+    							vm.tableData[i].money = '-' + s;
+    						}
+    					}
+                    }
+                });
+            })
             myChart.showLoading({
                 text: '数据努力加载中...'
             })
@@ -98,7 +144,9 @@ var vm = new Vue({
                         title: {
                             text: '收支趋势图'
                         },
-                        tooltip: {},
+                        tooltip: {
+                        	trigger: 'axis'
+                        },
                         legend: {
                             data:['支出', '收入', '余额']
                         },

@@ -106,8 +106,34 @@
 			`UPDATE_TIME`
 		FROM
 			CBS_T_BOOK_KEEP
-		WHERE
+		<where>
 			UID = #{userId}
+			<if test="startDate != null">and date_format(keep_time, '%Y-%m-%d') >= #{startDate}</if>
+			<if test="endDate != null">and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate}</if>
+		</where>
+		ORDER BY
+			KEEP_TIME DESC
+	</select>
+	
+	<select id="listUser" resultType="CbsTBookKeepEntity" flushCache="true">
+		SELECT
+			`ID`,
+			`BOOK_ID`,
+			`UID`,
+			`KEEP_TIME`,
+			`MONEY`,
+			`TYPE_ID`,
+			`OUT_IN`,
+			`REMARK`,
+			`CREATE_TIME`,
+			`UPDATE_TIME`
+		FROM
+			CBS_T_BOOK_KEEP
+		<where>
+			UID = #{userId}
+			<if test="startDate != null">and date_format(keep_time, '%Y-%m-%d') >= #{startDate}</if>
+			<if test="endDate != null">and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate}</if>
+		</where>
 		ORDER BY
 			KEEP_TIME DESC
 	</select>
