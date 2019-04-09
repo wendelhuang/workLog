@@ -149,7 +149,46 @@ var vm = new Vue({
 			});
 		},
 		load: function() {
-			this.getTableData(this.currentDate, 'current');
+			
+			$.post({
+				url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
+				dataType: 'json',
+			    contentType: 'application/json',
+			    data: JSON.stringify({'eventType': 'WORKLOG'}),
+			    type: 'POST',
+				success: function(data) {
+					var events = $.map(data, function(datum, index) {
+						var h = {};
+						h.title = '[工作日记]' + datum.title;
+						h.editable = datum.editable == 'TRUE';
+						h.allDay = datum.allDay == 'TRUE';
+						h.start = datum.start;
+						return h;
+					});
+					
+					$('#calendar').fullCalendar({
+						defaultDate: formatDate(new Date(), 'yyyy-MM-dd'),
+						eventLimit: true,
+						dayClick: function(date, jsEvent, view) {
+							dialogOpen({
+								title: '新增',
+								url: 'cbs/cbstworklog/add.html?_' + $.now(),
+								width: '420px',
+								height: '350px',
+								yes : function(iframeId) {
+									top.frames[iframeId].vm.acceptClick();
+								},
+							});
+						},
+						eventClick: function(event, jsEvent, view) {
+							console.log(event);
+							console.log(jsEvent);
+							console.log(view);
+						},
+						events: events
+					});
+				}
+			});
 		},
 		backward: function() {
 			this.getTableData(this.currentDate, 'backward');

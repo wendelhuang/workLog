@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTCalenEventMapper">
+
+	<select id="listCbsTCalenEvent" resultType="CbsTCalenEventEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`CLASS_NAME`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`REMARK`, 
+			`EVENT_TYPE`, 
+			`FOREIGN_ID`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_CALEN_EVENT
+		WHERE EVENT_TYPE = #{eventType} and uid = #{uid}
+		ORDER BY
+			CREATE_TIME DESC
+	</select>
+	
+	<select id="listForPage" resultType="CbsTCalenEventEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`CLASS_NAME`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`REMARK`, 
+			`EVENT_TYPE`, 
+			`FOREIGN_ID`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_CALEN_EVENT
+		ORDER BY
+			ID DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO CBS_T_CALEN_EVENT (
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`CLASS_NAME`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`REMARK`, 
+			`EVENT_TYPE`, 
+			`FOREIGN_ID`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		)
+		VALUES (
+			#{uid}, 
+			#{calenId}, 
+			#{title}, 
+			#{allDay}, 
+			#{start}, 
+			#{end}, 
+			#{url}, 
+			#{className}, 
+			#{editable}, 
+			#{source}, 
+			#{color}, 
+			#{backgroundColor}, 
+			#{borderColor}, 
+			#{textColor}, 
+			#{remark}, 
+			#{eventType}, 
+			#{foreignId}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="CbsTCalenEventEntity">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`CLASS_NAME`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`REMARK`, 
+			`EVENT_TYPE`, 
+			`FOREIGN_ID`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_CALEN_EVENT
+		WHERE
+			ID = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE CBS_T_CALEN_EVENT
+	 	<set>
+			<if test="uid != null">`UID` = #{uid}, </if>
+			<if test="calenId != null">`CALEN_ID` = #{calenId}, </if>
+			<if test="title != null">`TITLE` = #{title}, </if>
+			<if test="allDay != null">`ALL_DAY` = #{allDay}, </if>
+			<if test="start != null">`START` = #{start}, </if>
+			<if test="end != null">`END` = #{end}, </if>
+			<if test="url != null">`URL` = #{url}, </if>
+			<if test="className != null">`CLASS_NAME` = #{className}, </if>
+			<if test="editable != null">`EDITABLE` = #{editable}, </if>
+			<if test="source != null">`SOURCE` = #{source}, </if>
+			<if test="color != null">`COLOR` = #{color}, </if>
+			<if test="backgroundColor != null">`BACKGROUND_COLOR` = #{backgroundColor}, </if>
+			<if test="borderColor != null">`BORDER_COLOR` = #{borderColor}, </if>
+			<if test="textColor != null">`TEXT_COLOR` = #{textColor}, </if>
+			<if test="remark != null">`REMARK` = #{remark}, </if>
+			<if test="eventType != null">`EVENT_TYPE` = #{eventType}, </if>
+			<if test="foreignId != null">`FOREIGN_ID` = #{foreignId}, </if>
+			<if test="createTime != null">`CREATE_TIME` = #{createTime}, </if>
+			<if test="updateTime != null">`UPDATE_TIME` = #{updateTime}</if>
+		</set>
+		WHERE
+			ID = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			CBS_T_CALEN_EVENT
+		WHERE
+			ID IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+</mapper>

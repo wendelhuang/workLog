@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('新增-')"></head>
+<body>
+	<div id="dpLTE" class="container-fluid" v-cloak>
+		<table class="form" id="form">
+			<tr>
+	            <td class="formTitle formRequired"></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="" v-model="cbsTCalenEvent.uid" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired"></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="" v-model="cbsTCalenEvent.calenId" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">title</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="title" v-model="cbsTCalenEvent.title" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">是否全天</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="是否全天" v-model="cbsTCalenEvent.allDay" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">开始时间</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="开始时间" v-model="cbsTCalenEvent.start" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">结束时间</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="结束时间" v-model="cbsTCalenEvent.end" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">url</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="url" v-model="cbsTCalenEvent.url" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">className</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="className" v-model="cbsTCalenEvent.className" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">可编辑</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="可编辑" v-model="cbsTCalenEvent.editable" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">souce</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="souce" v-model="cbsTCalenEvent.source" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">背景和边框颜色</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="背景和边框颜色" v-model="cbsTCalenEvent.color" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">背景颜色</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="背景颜色" v-model="cbsTCalenEvent.backgroundColor" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">边框颜色</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="边框颜色" v-model="cbsTCalenEvent.borderColor" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">文本颜色</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="文本颜色" v-model="cbsTCalenEvent.textColor" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">备注</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="备注" v-model="cbsTCalenEvent.remark" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">类型</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="类型" v-model="cbsTCalenEvent.eventType" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired"></td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="" v-model="cbsTCalenEvent.foreignId" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">创建时间</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="创建时间" v-model="cbsTCalenEvent.createTime" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">更新时间</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="更新时间" v-model="cbsTCalenEvent.updateTime" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+		</table>
+	</div>
+    <div th:include="include/footer_js::footer"></div>
+    <script th:src="@{/statics/js/cbs/cbstcalenevent/add.js}"></script>
+</body>
+</html>

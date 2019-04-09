@@ -4,8 +4,9 @@
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {
-		cbsTWorklog: {
-			id: 0
+		cbsTCalenEvent: {
+			id: 0,
+			eventType: 'WORKLOG'
 		}
 	},
 	methods : {
@@ -14,8 +15,8 @@ var vm = new Vue({
 		        return false;
 		    }
 		    $.SaveForm({
-		    	url: '../../CBS/T/WORKLOG/save?_' + $.now(),
-		    	param: vm.cbsTWorklog,
+		    	url: '../../CBS/T/CALEN/EVENT/save?_' + $.now(),
+		    	param: vm.cbsTCalenEvent,
 		    	success: function(data) {
 		    		$.currentIframe().vm.load();
 		    	}
