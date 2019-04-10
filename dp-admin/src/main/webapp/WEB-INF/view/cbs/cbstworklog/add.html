@@ -6,16 +6,21 @@
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
 			<tr>
-	            <td class="formTitle formRequired">时间</td>
+				<td class="formTitle">开始日期</td>
+				<td class="formValue">
+					{{formatDate(cbsTCalenEvent.start, 'yyyy-MM-dd')}}
+				</td>
+			</tr>
+			<tr>
+	            <td class="formTitle formRequired">开始时间</td>
 	            <td class="formValue">
-					<!-- <el-input id="keepTime" placeholder="时间" v-model="cbsTWorklog.keepTime" isvalid="yes" checkexpession="NotNull"></el-input> -->
-					<el-date-picker placeholder="时间" type="datetime" v-model="cbsTCalenEvent.start" isvalid="yes" checkexpression="NotNull"></el-date-picker>
+					<el-time-picker placeholder="开始时间" type="datetime" v-model="cbsTCalenEvent.start" isvalid="yes" checkexpression="NotNull"></el-time-picker>
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle">工作内容</td>
+	            <td class="formTitle formRequired">工作内容</td>
 	            <td class="formValue">
-					<el-input placeholder="备注" v-model="cbsTCalenEvent.title"></el-input>
+					<el-input type="textarea" :autosize="{minRows: 2}" placeholder="备注" v-model="cbsTCalenEvent.title" checkexpression="NotNull"></el-input>
 	            </td>
         	</tr>
 		</table>

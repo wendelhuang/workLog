@@ -149,46 +149,88 @@ var vm = new Vue({
 			});
 		},
 		load: function() {
-			
-			$.post({
-				url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
-				dataType: 'json',
-			    contentType: 'application/json',
-			    data: JSON.stringify({'eventType': 'WORKLOG'}),
-			    type: 'POST',
-				success: function(data) {
-					var events = $.map(data, function(datum, index) {
-						var h = {};
-						h.title = '[工作日记]' + datum.title;
-						h.editable = datum.editable == 'TRUE';
-						h.allDay = datum.allDay == 'TRUE';
-						h.start = datum.start;
-						return h;
-					});
-					
-					$('#calendar').fullCalendar({
-						defaultDate: formatDate(new Date(), 'yyyy-MM-dd'),
-						eventLimit: true,
-						dayClick: function(date, jsEvent, view) {
-							dialogOpen({
-								title: '新增',
-								url: 'cbs/cbstworklog/add.html?_' + $.now(),
-								width: '420px',
-								height: '350px',
-								yes : function(iframeId) {
-									top.frames[iframeId].vm.acceptClick();
-								},
-							});
-						},
-						eventClick: function(event, jsEvent, view) {
-							console.log(event);
-							console.log(jsEvent);
-							console.log(view);
-						},
-						events: events
-					});
-				}
-			});
+            $('#calendar').fullCalendar({
+                defaultDate: formatDate(new Date(), 'yyyy-MM-dd'),
+                eventLimit: true,
+                dayClick: function(date, jsEvent, view) {
+                    dialogOpen({
+                        title: '新增',
+                        url: 'cbs/cbstworklog/add.html?dateValue='+ date.format(),
+                        width: '420px',
+                        height: '350px',
+                        data: {dateValue: date},
+                        yes : function(iframeId) {
+                            top.frames[iframeId].vm.acceptClick();
+                        },
+                    });
+                },
+                eventClick: function(event, jsEvent, view) {
+                    console.log(event);
+                    console.log(jsEvent);
+                    console.log(view);
+                },
+                events: function(start, end, timezone, callback) {
+                    $.post({
+                        url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
+                        dataType: 'json',
+                        contentType: 'application/json',
+                        data: JSON.stringify({'eventType': 'WORKLOG'}),
+                        type: 'POST',
+                        success: function(data) {
+                            var events = $.map(data, function(datum, index) {
+                                var h = {};
+                                h.title = '[工作日记]' + datum.title;
+                                h.editable = datum.editable == 'TRUE';
+                                h.allDay = datum.allDay == 'TRUE';
+                                h.start = datum.start;
+                                return h;
+                            });
+
+
+                        }
+                    });
+                }
+            });
+		},
+		reload: function() {
+            $('#calendar').fullCalendar('removeEvents');
+            $('#calendar').fullCalendar('updateEvents',[
+                    {
+                        title  : 'event1',
+                        start  : '2019-04-01'
+                    },
+                    {
+                        title  : 'event2',
+                        start  : '2019-04-02',
+                    },
+                    {
+                        title  : 'event3',
+                        start  : '2019-04-03',
+                        allDay : false // will make the time show
+                    }
+                ]
+			);
+            /*$.post({
+                url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({'eventType': 'WORKLOG'}),
+                type: 'POST',
+                success: function(data) {
+                    var events = $.map(data, function(datum, index) {
+                        var h = {};
+                        h.title = '[工作日记]' + datum.title;
+                        h.editable = datum.editable == 'TRUE';
+                        h.allDay = datum.allDay == 'TRUE';
+                        h.start = datum.start;
+                        return h;
+                    });
+
+                    console.log(events.length);
+
+                    $('#calendar').fullCalendar({events: events});
+                }
+            });*/
 		},
 		backward: function() {
 			this.getTableData(this.currentDate, 'backward');
