@@ -150,12 +150,24 @@ var vm = new Vue({
 		},
 		load: function() {
             $('#calendar').fullCalendar({
-                defaultDate: formatDate(new Date(), 'yyyy-MM-dd'),
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listMonth'
+				},
+                defaultDate: this.currentDate,
+				locale: 'zh-cn',
                 eventLimit: true,
                 dayClick: function(date, jsEvent, view) {
+					// fullCalendar因为view不同，传递的date类型不同
+					var dateValue = date.format('YYYY-MM-DD-HH-mm-ss');
+					if (!date.hasTime()) {
+						dateValue = date.format('YYYY-MM-DD-') + formatDate(new Date(), 'hh-mm-ss');
+					}
+
                     dialogOpen({
                         title: '新增',
-                        url: 'cbs/cbstworklog/add.html?dateValue='+ date.format(),
+                        url: 'cbs/cbstworklog/add.html?dateValue='+ dateValue,
                         width: '420px',
                         height: '350px',
                         data: {dateValue: date},
@@ -170,11 +182,13 @@ var vm = new Vue({
                     console.log(view);
                 },
                 events: function(start, end, timezone, callback) {
+					var startDate = start.format('YYYY-MM-DD');
+					var endDate = end.format('YYYY-MM-DD');
                     $.post({
                         url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
                         dataType: 'json',
                         contentType: 'application/json',
-                        data: JSON.stringify({'eventType': 'WORKLOG'}),
+                        data: JSON.stringify({eventType: 'WORKLOG', startDate: startDate, endDate: endDate}),
                         type: 'POST',
                         success: function(data) {
                             var events = $.map(data, function(datum, index) {
@@ -185,16 +199,16 @@ var vm = new Vue({
                                 h.start = datum.start;
                                 return h;
                             });
-
-
+							callback(events);
                         }
                     });
                 }
             });
 		},
 		reload: function() {
-            $('#calendar').fullCalendar('removeEvents');
-            $('#calendar').fullCalendar('updateEvents',[
+            $('#calendar').fullCalendar('refetchEvents');
+            //TODO 自己获取再updateEvents不可以
+            /*$('#calendar').fullCalendar('updateEvents',[
                     {
                         title  : 'event1',
                         start  : '2019-04-01'
@@ -209,7 +223,7 @@ var vm = new Vue({
                         allDay : false // will make the time show
                     }
                 ]
-			);
+			);*/
             /*$.post({
                 url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
                 dataType: 'json',

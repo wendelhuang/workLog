@@ -12,12 +12,11 @@ var vm = new Vue({
 	},
 	mounted: function() {
 		//TODO: 验证直接在data中使用不可以
-		this.cbsTCalenEvent.date = this.getUrlKey('dateValue');
-		var targetDate = new Date(this.cbsTCalenEvent.date.replace(/-/g, '/'));
-		this.cbsTCalenEvent.start = new Date();
-        this.cbsTCalenEvent.start.setFullYear(targetDate.getFullYear());
-        this.cbsTCalenEvent.start.setMonth(targetDate.getMonth());
-        this.cbsTCalenEvent.start.setDate(targetDate.getDate());
+		var dateValue = this.getUrlKey('dateValue');
+		var dateArray = dateValue.split('-');
+		var date = new Date(parseInt(dateArray[0]),parseInt(dateArray[1])-1,parseInt(dateArray[2]),parseInt(dateArray[3]),parseInt(dateArray[4]),parseInt(dateArray[5]));
+		this.cbsTCalenEvent.date = formatDate(date, 'yyyy-MM-dd');
+		this.cbsTCalenEvent.start = date;
     },
 	methods : {
 		getUrlKey: function(name) {
