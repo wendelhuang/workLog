@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RestController;
 import net.chenlin.dp.common.annotation.SysLog;
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
-import net.chenlin.dp.modules.cbs.entity.CbsTCalenEventEntity;
-import net.chenlin.dp.modules.cbs.service.CbsTCalenEventService;
+import net.chenlin.dp.modules.cbs.entity.CbsTCalenEventTypeEntity;
+import net.chenlin.dp.modules.cbs.service.CbsTCalenEventTypeService;
 
 /**
  * 
  * @author zcl<yczclcn@163.com>
  */
 @RestController
-@RequestMapping("/CBS/T/CALEN/EVENT")
-public class CbsTCalenEventController extends AbstractController {
+@RequestMapping("/CBS/T/CALEN/EVENT/TYPE")
+public class CbsTCalenEventTypeController extends AbstractController {
 	
 	@Autowired
-	private CbsTCalenEventService cbsTCalenEventService;
+	private CbsTCalenEventTypeService cbsTCalenEventTypeService;
 	
 	/**
 	 * 列表
@@ -31,19 +31,19 @@ public class CbsTCalenEventController extends AbstractController {
 	 * @return
 	 */
 	@RequestMapping("/list")
-	public Page<CbsTCalenEventEntity> list(@RequestBody Map<String, Object> params) {
-		return cbsTCalenEventService.listCbsTCalenEvent(params);
+	public Page<CbsTCalenEventTypeEntity> list(@RequestBody Map<String, Object> params) {
+		return cbsTCalenEventTypeService.listCbsTCalenEventType(params);
 	}
 		
 	/**
 	 * 新增
-	 * @param cbsTCalenEvent
+	 * @param cbsTCalenEventType
 	 * @return
 	 */
 	@SysLog("新增")
 	@RequestMapping("/save")
-	public R save(@RequestBody CbsTCalenEventEntity cbsTCalenEvent) {
-		return cbsTCalenEventService.saveCbsTCalenEvent(cbsTCalenEvent);
+	public R save(@RequestBody CbsTCalenEventTypeEntity cbsTCalenEventType) {
+		return cbsTCalenEventTypeService.saveCbsTCalenEventType(cbsTCalenEventType);
 	}
 	
 	/**
@@ -53,18 +53,18 @@ public class CbsTCalenEventController extends AbstractController {
 	 */
 	@RequestMapping("/info")
 	public R getById(@RequestBody Long id) {
-		return cbsTCalenEventService.getCbsTCalenEventById(id);
+		return cbsTCalenEventTypeService.getCbsTCalenEventTypeById(id);
 	}
 	
 	/**
 	 * 修改
-	 * @param cbsTCalenEvent
+	 * @param cbsTCalenEventType
 	 * @return
 	 */
 	@SysLog("修改")
 	@RequestMapping("/update")
-	public R update(@RequestBody CbsTCalenEventEntity cbsTCalenEvent) {
-		return cbsTCalenEventService.updateCbsTCalenEvent(cbsTCalenEvent);
+	public R update(@RequestBody CbsTCalenEventTypeEntity cbsTCalenEventType) {
+		return cbsTCalenEventTypeService.updateCbsTCalenEventType(cbsTCalenEventType);
 	}
 	
 	/**
@@ -75,7 +75,7 @@ public class CbsTCalenEventController extends AbstractController {
 	@SysLog("删除")
 	@RequestMapping("/remove")
 	public R batchRemove(@RequestBody Long[] id) {
-		return cbsTCalenEventService.batchRemove(id);
+		return cbsTCalenEventTypeService.batchRemove(id);
 	}
 	
 }

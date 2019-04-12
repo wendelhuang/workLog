@@ -4,41 +4,41 @@ import java.util.Map;
 
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
-import net.chenlin.dp.modules.cbs.entity.CbsTCalenEventEntity;
+import net.chenlin.dp.modules.cbs.entity.CbsTCalenEventTypeEntity;
 
 /**
  * 
  * @author zcl<yczclcn@163.com>
  */
-public interface CbsTCalenEventService {
+public interface CbsTCalenEventTypeService {
 
     /**
 	 * 分页查询
 	 * @param params
 	 * @return
 	 */
-	Page<CbsTCalenEventEntity> listCbsTCalenEvent(Map<String, Object> params);
+	Page<CbsTCalenEventTypeEntity> listCbsTCalenEventType(Map<String, Object> params);
 
     /**
      * 新增
-     * @param cbsTCalenEvent
+     * @param cbsTCalenEventType
      * @return
      */
-	R saveCbsTCalenEvent(CbsTCalenEventEntity cbsTCalenEvent);
+	R saveCbsTCalenEventType(CbsTCalenEventTypeEntity cbsTCalenEventType);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	R getCbsTCalenEventById(Long id);
+	R getCbsTCalenEventTypeById(Long id);
 
     /**
      * 修改
-     * @param cbsTCalenEvent
+     * @param cbsTCalenEventType
      * @return
      */
-	R updateCbsTCalenEvent(CbsTCalenEventEntity cbsTCalenEvent);
+	R updateCbsTCalenEventType(CbsTCalenEventTypeEntity cbsTCalenEventType);
 
     /**
      * 列表

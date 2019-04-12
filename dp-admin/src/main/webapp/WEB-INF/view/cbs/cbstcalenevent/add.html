@@ -101,9 +101,15 @@
 	            </td>
         	</tr>
 			<tr>
-	            <td class="formTitle formRequired"></td>
+	            <td class="formTitle formRequired">重复类型</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="" v-model="cbsTCalenEvent.foreignId" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="重复类型" v-model="cbsTCalenEvent.repeatType" isvalid="yes" checkexpession="NotNull">
+	            </td>
+        	</tr>
+			<tr>
+	            <td class="formTitle formRequired">重复表达式</td>
+	            <td class="formValue">
+					<input type="text" class="form-control" placeholder="重复表达式" v-model="cbsTCalenEvent.repeatExpression" isvalid="yes" checkexpession="NotNull">
 	            </td>
         	</tr>
 			<tr>

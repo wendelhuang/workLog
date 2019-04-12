@@ -6,3 +6,5 @@ dp-common/.project
 *.project
 *.setting*
 .gitignore
+.idea/*
+*.iml

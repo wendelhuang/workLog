@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTCalenEventMapper">
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsTCalenEventTypeMapper">
 	
-	<select id="listForPage" resultType="CbsTCalenEventEntity" flushCache="true">
+	<select id="listForPage" resultType="CbsTCalenEventTypeEntity" flushCache="true">
 		SELECT
 			`ID`, 
 			`UID`, 
-			`CALEN_ID`, 
-			`TITLE`, 
-			`ALL_DAY`, 
-			`START`, 
-			`END`, 
-			`URL`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
 			`CLASS_NAME`, 
 			`EDITABLE`, 
 			`SOURCE`, 
@@ -21,26 +18,20 @@
 			`BORDER_COLOR`, 
 			`TEXT_COLOR`, 
 			`REMARK`, 
-			`EVENT_TYPE`, 
-			`REPEAT_TYPE`, 
-			`REPEAT_EXPRESSION`, 
 			`CREATE_TIME`, 
 			`UPDATE_TIME`
 		FROM
-			CBS_T_CALEN_EVENT
+			CBS_T_CALEN_EVENT_TYPE
 		ORDER BY
 			ID DESC
 	</select>
 	
 	<insert id="save">
-		INSERT INTO CBS_T_CALEN_EVENT (
+		INSERT INTO CBS_T_CALEN_EVENT_TYPE (
 			`UID`, 
-			`CALEN_ID`, 
-			`TITLE`, 
-			`ALL_DAY`, 
-			`START`, 
-			`END`, 
-			`URL`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
 			`CLASS_NAME`, 
 			`EDITABLE`, 
 			`SOURCE`, 
@@ -49,20 +40,14 @@
 			`BORDER_COLOR`, 
 			`TEXT_COLOR`, 
 			`REMARK`, 
-			`EVENT_TYPE`, 
-			`REPEAT_TYPE`, 
-			`REPEAT_EXPRESSION`, 
 			`CREATE_TIME`, 
 			`UPDATE_TIME`
 		)
 		VALUES (
 			#{uid}, 
-			#{calenId}, 
-			#{title}, 
-			#{allDay}, 
-			#{start}, 
-			#{end}, 
-			#{url}, 
+			#{typeCode}, 
+			#{typeName}, 
+			#{typeType}, 
 			#{className}, 
 			#{editable}, 
 			#{source}, 
@@ -71,24 +56,18 @@
 			#{borderColor}, 
 			#{textColor}, 
 			#{remark}, 
-			#{eventType}, 
-			#{repeatType}, 
-			#{repeatExpression}, 
 			#{createTime}, 
 			#{updateTime}
 		)
 	</insert>
 	
-	<select id="getObjectById" resultType="CbsTCalenEventEntity">
+	<select id="getObjectById" resultType="CbsTCalenEventTypeEntity">
 		SELECT
 			`ID`, 
 			`UID`, 
-			`CALEN_ID`, 
-			`TITLE`, 
-			`ALL_DAY`, 
-			`START`, 
-			`END`, 
-			`URL`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
 			`CLASS_NAME`, 
 			`EDITABLE`, 
 			`SOURCE`, 
@@ -97,27 +76,21 @@
 			`BORDER_COLOR`, 
 			`TEXT_COLOR`, 
 			`REMARK`, 
-			`EVENT_TYPE`, 
-			`REPEAT_TYPE`, 
-			`REPEAT_EXPRESSION`, 
 			`CREATE_TIME`, 
 			`UPDATE_TIME`
 		FROM
-			CBS_T_CALEN_EVENT
+			CBS_T_CALEN_EVENT_TYPE
 		WHERE
 			ID = #{id}
 	</select>
 	
 	<update id="update">
-		UPDATE CBS_T_CALEN_EVENT
+		UPDATE CBS_T_CALEN_EVENT_TYPE
 	 	<set>
 			<if test="uid != null">`UID` = #{uid}, </if>
-			<if test="calenId != null">`CALEN_ID` = #{calenId}, </if>
-			<if test="title != null">`TITLE` = #{title}, </if>
-			<if test="allDay != null">`ALL_DAY` = #{allDay}, </if>
-			<if test="start != null">`START` = #{start}, </if>
-			<if test="end != null">`END` = #{end}, </if>
-			<if test="url != null">`URL` = #{url}, </if>
+			<if test="typeCode != null">`TYPE_CODE` = #{typeCode}, </if>
+			<if test="typeName != null">`TYPE_NAME` = #{typeName}, </if>
+			<if test="typeType != null">`TYPE_TYPE` = #{typeType}, </if>
 			<if test="className != null">`CLASS_NAME` = #{className}, </if>
 			<if test="editable != null">`EDITABLE` = #{editable}, </if>
 			<if test="source != null">`SOURCE` = #{source}, </if>
@@ -126,9 +99,6 @@
 			<if test="borderColor != null">`BORDER_COLOR` = #{borderColor}, </if>
 			<if test="textColor != null">`TEXT_COLOR` = #{textColor}, </if>
 			<if test="remark != null">`REMARK` = #{remark}, </if>
-			<if test="eventType != null">`EVENT_TYPE` = #{eventType}, </if>
-			<if test="repeatType != null">`REPEAT_TYPE` = #{repeatType}, </if>
-			<if test="repeatExpression != null">`REPEAT_EXPRESSION` = #{repeatExpression}, </if>
 			<if test="createTime != null">`CREATE_TIME` = #{createTime}, </if>
 			<if test="updateTime != null">`UPDATE_TIME` = #{updateTime}</if>
 		</set>
@@ -139,7 +109,7 @@
 	<delete id="batchRemove">
 		DELETE
 		FROM
-			CBS_T_CALEN_EVENT
+			CBS_T_CALEN_EVENT_TYPE
 		WHERE
 			ID IN
 		<foreach item="id" collection="array" open="(" separator="," close=")">

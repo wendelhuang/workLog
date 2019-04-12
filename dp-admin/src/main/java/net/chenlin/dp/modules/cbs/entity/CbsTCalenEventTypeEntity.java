@@ -8,12 +8,12 @@ import java.util.Date;
  * 
  * @author zcl<yczclcn@163.com>
  */
-public class CbsTCalenEventEntity implements Serializable {
+public class CbsTCalenEventTypeEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	/**
-	 * eventID
+	 * event type id
 	 */
 	private Long id;
 	
@@ -23,34 +23,19 @@ public class CbsTCalenEventEntity implements Serializable {
 	private Long uid;
 	
 	/**
-	 * 
+	 * 类型代码
 	 */
-	private Long calenId;
+	private String typeCode;
 	
 	/**
-	 * title
+	 * 类型名称
 	 */
-	private String title;
+	private String typeName;
 	
 	/**
-	 * 是否全天
+	 * 类型的类型
 	 */
-	private String allDay;
-	
-	/**
-	 * 开始时间
-	 */
-	private Date start;
-	
-	/**
-	 * 结束时间
-	 */
-	private Date end;
-	
-	/**
-	 * url
-	 */
-	private String url;
+	private String typeType;
 	
 	/**
 	 * className
@@ -93,21 +78,6 @@ public class CbsTCalenEventEntity implements Serializable {
 	private String remark;
 	
 	/**
-	 * 类型
-	 */
-	private Long eventType;
-	
-	/**
-	 * 重复类型
-	 */
-	private String repeatType;
-	
-	/**
-	 * 重复表达式
-	 */
-	private String repeatExpression;
-	
-	/**
 	 * 创建时间
 	 */
 	private Date createTime;
@@ -118,7 +88,7 @@ public class CbsTCalenEventEntity implements Serializable {
 	private Date updateTime;
 	
 
-	public CbsTCalenEventEntity() {
+	public CbsTCalenEventTypeEntity() {
 		super();
 	}
 
@@ -153,93 +123,48 @@ public class CbsTCalenEventEntity implements Serializable {
 	}
 	
     /**
-     * setter for calenId
-	 * @param calenId
+     * setter for typeCode
+	 * @param typeCode
      */
-	public void setCalenId(Long calenId) {
-		this.calenId = calenId;
+	public void setTypeCode(String typeCode) {
+		this.typeCode = typeCode;
 	}
 
     /**
-     * getter for calenId
+     * getter for typeCode
      */
-	public Long getCalenId() {
-		return calenId;
+	public String getTypeCode() {
+		return typeCode;
 	}
 	
     /**
-     * setter for title
-	 * @param title
+     * setter for typeName
+	 * @param typeName
      */
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
     /**
-     * getter for title
+     * getter for typeName
      */
-	public String getTitle() {
-		return title;
+	public String getTypeName() {
+		return typeName;
 	}
 	
     /**
-     * setter for allDay
-	 * @param allDay
+     * setter for typeType
+	 * @param typeType
      */
-	public void setAllDay(String allDay) {
-		this.allDay = allDay;
+	public void setTypeType(String typeType) {
+		this.typeType = typeType;
 	}
 
     /**
-     * getter for allDay
+     * getter for typeType
      */
-	public String getAllDay() {
-		return allDay;
-	}
-	
-    /**
-     * setter for start
-	 * @param start
-     */
-	public void setStart(Date start) {
-		this.start = start;
-	}
-
-    /**
-     * getter for start
-     */
-	public Date getStart() {
-		return start;
-	}
-	
-    /**
-     * setter for end
-	 * @param end
-     */
-	public void setEnd(Date end) {
-		this.end = end;
-	}
-
-    /**
-     * getter for end
-     */
-	public Date getEnd() {
-		return end;
-	}
-	
-    /**
-     * setter for url
-	 * @param url
-     */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-    /**
-     * getter for url
-     */
-	public String getUrl() {
-		return url;
+	public String getTypeType() {
+		return typeType;
 	}
 	
     /**
@@ -360,51 +285,6 @@ public class CbsTCalenEventEntity implements Serializable {
      */
 	public String getRemark() {
 		return remark;
-	}
-	
-    /**
-     * setter for eventType
-	 * @param eventType
-     */
-	public void setEventType(Long eventType) {
-		this.eventType = eventType;
-	}
-
-    /**
-     * getter for eventType
-     */
-	public Long getEventType() {
-		return eventType;
-	}
-	
-    /**
-     * setter for repeatType
-	 * @param repeatType
-     */
-	public void setRepeatType(String repeatType) {
-		this.repeatType = repeatType;
-	}
-
-    /**
-     * getter for repeatType
-     */
-	public String getRepeatType() {
-		return repeatType;
-	}
-	
-    /**
-     * setter for repeatExpression
-	 * @param repeatExpression
-     */
-	public void setRepeatExpression(String repeatExpression) {
-		this.repeatExpression = repeatExpression;
-	}
-
-    /**
-     * getter for repeatExpression
-     */
-	public String getRepeatExpression() {
-		return repeatExpression;
 	}
 	
     /**
