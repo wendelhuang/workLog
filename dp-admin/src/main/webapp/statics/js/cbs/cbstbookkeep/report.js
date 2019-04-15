@@ -53,7 +53,8 @@ var vm = new Vue({
 		keyword: null,
 		tableData: [],
         dateRange: [countDay(-90), today()],
-        show: false
+        show: false,
+        activeName: 'tab1'
 	},
     mounted: function() {
         //this.load();
@@ -183,6 +184,10 @@ var vm = new Vue({
 		},
         togger: function() {
 		    this.show = !this.show;
+        },
+        tabClick: function(tab, event) {
+		    console.log(tab);
+		    console.log(event);
         },
 		save: function() {
 			dialogOpen({
