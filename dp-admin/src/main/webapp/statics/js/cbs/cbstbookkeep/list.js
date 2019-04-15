@@ -115,7 +115,7 @@ var vm = new Vue({
 				title: '新增',
 				url: 'cbs/cbstbookkeep/add.html?_' + $.now(),
 				width: '420px',
-				height: '350px',
+				height: '500px',
 				yes : function(iframeId) {
 					top.frames[iframeId].vm.acceptClick();
 				},
@@ -126,7 +126,7 @@ var vm = new Vue({
                 title: '编辑',
                 url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
                 width: '420px',
-                height: '350px',
+                height: '500px',
                 success: function(iframeId){
                     top.frames[iframeId].vm.cbsTBookKeep.id = id;
                     top.frames[iframeId].vm.setForm();
@@ -162,7 +162,7 @@ var vm = new Vue({
                 title: '编辑',
                 url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
                 width: '420px',
-                height: '350px',
+                height: '500px',
                 success: function(iframeId){
                     top.frames[iframeId].vm.cbsTBookKeep.id = id;
                     top.frames[iframeId].vm.setForm();

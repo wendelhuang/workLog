@@ -6,10 +6,19 @@
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
 			<tr>
+				<td class="formTitle formRequired">日期</td>
+				<td class="formValue">
+					<!-- <el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input> -->
+					<!--<el-date-picker placeholder="时间" type="datetime" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpression="NotNull"></el-date-picker>-->
+					<el-date-picker placeholder="日期" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkExpression="NotNull"></el-date-picker>
+				</td>
+			</tr>
+			<tr>
 	            <td class="formTitle formRequired">时间</td>
 	            <td class="formValue">
 					<!-- <el-input id="keepTime" placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpession="NotNull"></el-input> -->
-					<el-date-picker placeholder="时间" type="datetime" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpression="NotNull"></el-date-picker>
+					<!--<el-date-picker placeholder="时间" type="datetime" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpression="NotNull"></el-date-picker>-->
+					<el-time-picker placeholder="时间" v-model="cbsTBookKeep.keepTime" isvalid="yes" checkexpression="NotNull"></el-time-picker>
 	            </td>
         	</tr>
 			<tr>
