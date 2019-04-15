@@ -52,7 +52,8 @@ var vm = new Vue({
 	data: {
 		keyword: null,
 		tableData: [],
-        dateRange: [countDay(-90), today()]
+        dateRange: [countDay(-90), today()],
+        show: false
 	},
     mounted: function() {
         //this.load();
@@ -180,6 +181,9 @@ var vm = new Vue({
             });
 			
 		},
+        togger: function() {
+		    this.show = !this.show;
+        },
 		save: function() {
 			dialogOpen({
 				title: '新增',
