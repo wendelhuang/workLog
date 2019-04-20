@@ -23,14 +23,17 @@ function getGrid() {
 		},
 		columns: [
 			{checkbox: true},
-			{field : "uid", title : "uid", width : "100px"},
+			{field : "uid", title : "", width : "100px"},
 			{field : "typeCode", title : "类型代码", width : "100px"},
 			{field : "typeName", title : "类型名称", width : "100px"},
-			{field : "typeType", title : "类型的类型", width : "100px", formatter: function(value, row, index) {
-					var m = {BOOK_KEEP: '记账', WORKLOG: '工作日记'};
-					return m[value];
-				}
-			},
+			{field : "typeType", title : "类型的类型", width : "100px"},
+			{field : "className", title : "className", width : "100px"},
+			{field : "editable", title : "可编辑", width : "100px"},
+			{field : "source", title : "souce", width : "100px"},
+			{field : "color", title : "背景和边框颜色", width : "100px"},
+			{field : "backgroundColor", title : "背景颜色", width : "100px"},
+			{field : "borderColor", title : "边框颜色", width : "100px"},
+			{field : "textColor", title : "文本颜色", width : "100px"},
 			{field : "remark", title : "备注", width : "100px"},
 			{field : "createTime", title : "创建时间", width : "100px"},
 			{field : "updateTime", title : "更新时间", width : "100px"},

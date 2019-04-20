@@ -6,7 +6,11 @@ var vm = new Vue({
 	data: {
 		cbsTCalenEventType: {
 			id: 0
-		}
+		},
+		options: [
+			{value: 'BOOK_KEEP', text: '记账'},
+			{value: 'WORKLOG', text: '工作日记'}
+		]
 	},
 	methods : {
 		setForm: function() {

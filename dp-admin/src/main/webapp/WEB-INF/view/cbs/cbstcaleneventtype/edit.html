@@ -6,12 +6,6 @@
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
 			<tr>
-	            <td class="formTitle formRequired"></td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="" v-model="cbsTCalenEventType.uid" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
 	            <td class="formTitle formRequired">类型代码</td>
 	            <td class="formValue">
 					<input type="text" class="form-control" placeholder="类型代码" v-model="cbsTCalenEventType.typeCode" isvalid="yes" checkexpession="NotNull">
@@ -26,67 +20,16 @@
 			<tr>
 	            <td class="formTitle formRequired">类型的类型</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="类型的类型" v-model="cbsTCalenEventType.typeType" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">className</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="className" v-model="cbsTCalenEventType.className" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">可编辑</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="可编辑" v-model="cbsTCalenEventType.editable" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">souce</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="souce" v-model="cbsTCalenEventType.source" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">背景和边框颜色</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="背景和边框颜色" v-model="cbsTCalenEventType.color" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">背景颜色</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="背景颜色" v-model="cbsTCalenEventType.backgroundColor" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">边框颜色</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="边框颜色" v-model="cbsTCalenEventType.borderColor" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">文本颜色</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="文本颜色" v-model="cbsTCalenEventType.textColor" isvalid="yes" checkexpession="NotNull">
+		        	<el-select v-model="cbsTCalenEventType.typeType">
+		            	<el-option v-for="item in options" :key="item.value" :label="item.text" :value="item.value">
+		            	</el-option>
+		            </el-select>
 	            </td>
         	</tr>
 			<tr>
 	            <td class="formTitle formRequired">备注</td>
 	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="备注" v-model="cbsTCalenEventType.remark" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">创建时间</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="创建时间" v-model="cbsTCalenEventType.createTime" isvalid="yes" checkexpession="NotNull">
-	            </td>
-        	</tr>
-			<tr>
-	            <td class="formTitle formRequired">更新时间</td>
-	            <td class="formValue">
-					<input type="text" class="form-control" placeholder="更新时间" v-model="cbsTCalenEventType.updateTime" isvalid="yes" checkexpession="NotNull">
+					<input type="text" class="form-control" placeholder="备注" v-model="cbsTCalenEventType.remark">
 	            </td>
         	</tr>
 		</table>
