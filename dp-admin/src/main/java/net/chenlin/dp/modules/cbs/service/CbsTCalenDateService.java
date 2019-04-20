@@ -9,7 +9,7 @@ import net.chenlin.dp.modules.cbs.entity.CbsTCalenDateEntity;
 
 /**
  * 
- * @author zcl<yczclcn@163.com>
+ * @author wendelhuang<weiwei5987(at)126.com>
  */
 public interface CbsTCalenDateService {
 

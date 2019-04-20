@@ -22,7 +22,7 @@ import net.chenlin.dp.modules.sys.entity.SysUserEntity;
 
 /**
  * 
- * @author zcl<yczclcn@163.com>
+ * @author wendelhuang<weiwei5987(at)126.com>
  */
 @Service("cbsTWorklogService")
 public class CbsTWorklogServiceImpl implements CbsTWorklogService {

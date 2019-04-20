@@ -2,7 +2,6 @@ package net.chenlin.dp.modules.cbs.controller;
 
 import java.util.Map;
 
-import net.chenlin.dp.modules.sys.controller.AbstractController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,20 +12,22 @@ import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTCalenDateEntity;
 import net.chenlin.dp.modules.cbs.service.CbsTCalenDateService;
+import net.chenlin.dp.modules.sys.controller.AbstractController;
 
 /**
  * 
- * @author zcl<yczclcn@163.com>
+ * @author wendelhuang<weiwei5987(at)126.com>
  */
 @RestController
 @RequestMapping("/CBS/T/CALEN/DATE")
 public class CbsTCalenDateController extends AbstractController {
-	
+
 	@Autowired
 	private CbsTCalenDateService cbsTCalenDateService;
-	
+
 	/**
 	 * 列表
+	 * 
 	 * @param params
 	 * @return
 	 */
@@ -34,9 +35,10 @@ public class CbsTCalenDateController extends AbstractController {
 	public Page<CbsTCalenDateEntity> list(@RequestBody Map<String, Object> params) {
 		return cbsTCalenDateService.listCbsTCalenDate(params);
 	}
-		
+
 	/**
 	 * 新增
+	 * 
 	 * @param cbsTCalenDate
 	 * @return
 	 */
@@ -45,9 +47,10 @@ public class CbsTCalenDateController extends AbstractController {
 	public R save(@RequestBody CbsTCalenDateEntity cbsTCalenDate) {
 		return cbsTCalenDateService.saveCbsTCalenDate(cbsTCalenDate);
 	}
-	
+
 	/**
 	 * 根据id查询详情
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -55,9 +58,10 @@ public class CbsTCalenDateController extends AbstractController {
 	public R getById(@RequestBody Long id) {
 		return cbsTCalenDateService.getCbsTCalenDateById(id);
 	}
-	
+
 	/**
 	 * 修改
+	 * 
 	 * @param cbsTCalenDate
 	 * @return
 	 */
@@ -66,9 +70,10 @@ public class CbsTCalenDateController extends AbstractController {
 	public R update(@RequestBody CbsTCalenDateEntity cbsTCalenDate) {
 		return cbsTCalenDateService.updateCbsTCalenDate(cbsTCalenDate);
 	}
-	
+
 	/**
 	 * 删除
+	 * 
 	 * @param id
 	 * @return
 	 */
@@ -77,5 +82,5 @@ public class CbsTCalenDateController extends AbstractController {
 	public R batchRemove(@RequestBody Long[] id) {
 		return cbsTCalenDateService.batchRemove(id);
 	}
-	
+
 }

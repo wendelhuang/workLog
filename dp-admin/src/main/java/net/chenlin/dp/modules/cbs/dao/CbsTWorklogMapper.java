@@ -7,9 +7,9 @@ import net.chenlin.dp.modules.cbs.entity.CbsTWorklogEntity;
 
 /**
  * 
- * @author zcl<yczclcn@163.com>
+ * @author wendelhuang<weiwei5987(at)126.com>
  */
 @MapperScan
 public interface CbsTWorklogMapper extends BaseMapper<CbsTWorklogEntity> {
-	
+
 }

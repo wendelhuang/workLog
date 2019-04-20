@@ -16,7 +16,7 @@ import net.chenlin.dp.modules.cbs.service.CbsTCalenDateService;
 
 /**
  * 
- * @author zcl<yczclcn@163.com>
+ * @author wendelhuang<weiwei5987(at)126.com>
  */
 @Service("cbsTCalenDateService")
 public class CbsTCalenDateServiceImpl implements CbsTCalenDateService {
