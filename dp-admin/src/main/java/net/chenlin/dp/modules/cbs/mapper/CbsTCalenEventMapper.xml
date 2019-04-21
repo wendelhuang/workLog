@@ -32,6 +32,38 @@
 			ID DESC
 	</select>
 	
+	<select id="list" resultType="CbsTCalenEventEntity" flushCache="true">
+		SELECT
+			`ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`CLASS_NAME`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`
+		FROM
+			CBS_T_CALEN_EVENT
+		<where>
+			uid = #{uid} and DATE_FORMAT(START, '%Y-%m-%d') >= #{startDate} and DATE_FORMAT(START, '%Y-%m-%d') &lt;= #{endDate}
+		</where>
+		ORDER BY
+			ID DESC
+	</select>
+	
 	<insert id="save">
 		INSERT INTO CBS_T_CALEN_EVENT (
 			`UID`, 

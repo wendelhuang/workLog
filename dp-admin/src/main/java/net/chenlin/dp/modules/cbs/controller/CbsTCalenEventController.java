@@ -31,8 +31,20 @@ public class CbsTCalenEventController extends AbstractController {
 	 * @param params
 	 * @return
 	 */
+	@RequestMapping("/pageList")
+	public Page<CbsTCalenEventEntity> pageList(@RequestBody Map<String, Object> params) {
+		return cbsTCalenEventService.pageListCbsTCalenEvent(params);
+	}
+
+	/**
+	 * 列表
+	 * 
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("/list")
-	public Page<CbsTCalenEventEntity> list(@RequestBody Map<String, Object> params) {
+	public R list(@RequestBody Map<String, Object> params) {
+		params.put("uid", getUserId());
 		return cbsTCalenEventService.listCbsTCalenEvent(params);
 	}
 
@@ -45,6 +57,7 @@ public class CbsTCalenEventController extends AbstractController {
 	@SysLog("新增")
 	@RequestMapping("/save")
 	public R save(@RequestBody CbsTCalenEventEntity cbsTCalenEvent) {
+		cbsTCalenEvent.setUid(getUserId());
 		return cbsTCalenEventService.saveCbsTCalenEvent(cbsTCalenEvent);
 	}
 

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:include="include/header_css::header('新增-')"></head>
-<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 <body>
 	<div id="dpLTE" class="container-fluid" v-cloak>
 		<table class="form" id="form">
@@ -18,6 +17,15 @@
 	            </td>
         	</tr>
 			<tr>
+	            <td class="formTitle formRequired">类型</td>
+	            <td class="formValue">
+					<el-select v-model="cbsTCalenEvent.eventType">
+						<el-option v-for="item in eventTypes" :key="item.value" :label="item.text" :value="item.value">
+						</el-option>
+					</el-select>
+	            </td>
+        	</tr>
+			<tr>
 	            <td class="formTitle formRequired">工作内容</td>
 	            <td class="formValue">
 					<el-input type="textarea" :autosize="{minRows: 2}" placeholder="备注" v-model="cbsTCalenEvent.title" checkexpression="NotNull"></el-input>
@@ -26,7 +34,7 @@
 		</table>
 	</div>
     <div th:include="include/footer_js::footer"></div>
-	<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script th:src="@{/statics/plugins/element-ui/element-ui-2.7.2/index.js}"></script>
     <script th:src="@{/statics/js/cbs/cbstworklog/add.js}"></script>
 </body>
 </html>

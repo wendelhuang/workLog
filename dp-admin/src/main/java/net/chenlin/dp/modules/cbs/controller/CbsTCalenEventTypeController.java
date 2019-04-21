@@ -1,5 +1,8 @@
 package net.chenlin.dp.modules.cbs.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import net.chenlin.dp.common.annotation.SysLog;
+import net.chenlin.dp.common.constant.SystemConstant;
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTCalenEventTypeEntity;
@@ -31,8 +35,26 @@ public class CbsTCalenEventTypeController extends AbstractController {
 	 * @param params
 	 * @return
 	 */
+	@RequestMapping("/pageList")
+	public Page<CbsTCalenEventTypeEntity> pageList(@RequestBody Map<String, Object> params) {
+		List<Long> userIds = Arrays.asList(getUserId(), SystemConstant.SUPER_ADMIN);
+		params.put("userIds", userIds);
+		return cbsTCalenEventTypeService.pageListCbsTCalenEventType(params);
+	}
+
+	/**
+	 * 列表, 不分页
+	 * 
+	 * @param params
+	 * @return
+	 */
 	@RequestMapping("/list")
-	public Page<CbsTCalenEventTypeEntity> list(@RequestBody Map<String, Object> params) {
+	public R list(@RequestBody(required = false) Map<String, Object> params) {
+		List<Long> userIds = Arrays.asList(getUserId(), SystemConstant.SUPER_ADMIN);
+		if (params == null) {
+			params = new HashMap<String, Object>();
+		}
+		params.put("userIds", userIds);
 		return cbsTCalenEventTypeService.listCbsTCalenEventType(params);
 	}
 

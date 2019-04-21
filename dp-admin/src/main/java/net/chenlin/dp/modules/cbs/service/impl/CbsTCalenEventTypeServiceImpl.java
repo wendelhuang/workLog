@@ -1,5 +1,6 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,18 @@ public class CbsTCalenEventTypeServiceImpl implements CbsTCalenEventTypeService 
 	 * @return
 	 */
 	@Override
-	public Page<CbsTCalenEventTypeEntity> listCbsTCalenEventType(Map<String, Object> params) {
+	public Page<CbsTCalenEventTypeEntity> pageListCbsTCalenEventType(Map<String, Object> params) {
 		Query query = new Query(params);
 		Page<CbsTCalenEventTypeEntity> page = new Page<>(query);
 		cbsTCalenEventTypeMapper.listForPage(page, query);
 		return page;
+	}
+
+	@Override
+	public R listCbsTCalenEventType(Map<String, Object> params) {
+		Query query = new Query(params);
+		List<CbsTCalenEventTypeEntity> list = cbsTCalenEventTypeMapper.list(query);
+		return CommonUtils.msg(list);
 	}
 
 	/**

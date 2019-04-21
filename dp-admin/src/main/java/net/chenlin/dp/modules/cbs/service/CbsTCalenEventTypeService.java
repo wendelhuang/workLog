@@ -18,7 +18,9 @@ public interface CbsTCalenEventTypeService {
 	 * @param params
 	 * @return
 	 */
-	Page<CbsTCalenEventTypeEntity> listCbsTCalenEventType(Map<String, Object> params);
+	Page<CbsTCalenEventTypeEntity> pageListCbsTCalenEventType(Map<String, Object> params);
+
+	R listCbsTCalenEventType(Map<String, Object> params);
 
 	/**
 	 * 新增

@@ -12,141 +12,38 @@ function initialPage() {
 	});
 }
 
-function logFormatter(value, row, index) {
-	var _html = '';
-	_html += '<textarea>' + value + '</textarea>';
-	return _html;
-}
-
-function getGrid() {
-	$('#dataGrid').bootstrapTableEx({
-		url: '../../CBS/T/WORKLOG/list?_' + $.now(),
-		height: $(window).height()-56,
-		queryParams: function(params){
-			params.name = vm.keyword;
-			return params;
-		},
-		responseHandler: function (data) {
-			var workLog = {};
-			for(var i = 0; i < data.workLog.length; i++) {
-				workLog[data.workLog.workDate] = data.workLog[i];
-			}
-			var tableDataTmp = [];
-			var calenDate = data.calenDate;
-			for(var i = 0; i < calenDate.length; i++) {
-				var d = calenDate[i];
-				var datum = {};
-				datum.workDate = d.dateFmt10;
-				datum.dayOfWeek = d.dateWeekday;
-				if (workLog[d.dateFmt10] != undefined) {
-					datum.morning = workLog.morning;
-					datum.afternoon = workLog.afternoon;
-					datum.evening = workLog.evening;
-				}else{
-					datum.morning = '';
-					datum.afternoon = '';
-					datum.evening = '';
-				}
-				tableDataTmp.push(datum);
-			}
-			return {'rows': tableDataTmp};
-		},
-		columns: [
-			{field : "workDate", title : "工作日期", width : "100px"},
-			{field : "dayOfWeek", title : "星期", width : "100px", formatter: function(value, row, index){
-					switch(value){
-					case 1:
-						return '星期一';
-					case 2:
-						return '星期二';
-					case 3:
-						return '星期三';
-					case 4:
-						return '星期四';
-					case 5:
-						return '星期五';
-					case 6:
-						return '星期六';
-					case 7:
-						return '星期日';
-					}
-				}
-			},
-			{field : "morning", title : "上午", formatter: logFormatter},
-			{field : "afternoon", title : "下午", formatter: logFormatter},
-			{field : "evening", title : "晚上", formatter: logFormatter},
-			{title : "操作", formatter : function(value, row, index) {
-					var _html = '';
-					if (hasPermission('CBS:T:WORKLOG:edit')) {
-                        _html += '<a href="javascript:;" onclick="vm.edit(\''+row.id+'\')" title="保存"><i class="fa fa-save"></i></a>';
-					}
-					if (hasPermission('CBS:T:WORKLOG:remove')) {
-                        _html += '<a href="javascript:;" onclick="vm.remove(false,\''+row.id+'\')" title="清空"><i class="fa fa-trash-o"></i></a>';
-					}
-					return _html;
-				}
-			}
-		]
-	})
-}
-
 var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		keyword: null,
 		input1: '',
 		tableData: [],
-		currentDate: today()
+		currentDate: today(),
+		eventTypes: [],
+		eventTypeMap: {}
 	},
 	mounted: function() {
+		this.loadEventTypes();
 		this.load();
 	},
 	methods : {
-		getTableData: function(currentDate, direction) {
+		loadEventTypes: function() {
 			$.post({
-				url: '../../CBS/T/WORKLOG/list?_' + $.now(),
-				dataType: 'json',
-			    contentType: 'application/json',
-			    data: JSON.stringify({'currentDate': currentDate, 'direction': direction}),
-			    type: 'POST',
-				success: function(data) {
-					vm.currentDate = data.currentDate;
-					console.log(vm.currentDate);
-					var weekTrans = {
-						1: '星期一',
-						2: '星期二',
-						3: '星期三',
-						4: '星期四',
-						5: '星期五',
-						6: '星期六',
-						7: '星期日',
-					}
-					var workLog = {};
-					for(var i = 0; i < data.workLog.length; i++) {
-						workLog[data.workLog[i].workDate] = data.workLog[i];
-					}
-					var tableDataTmp = [];
-					var calenDate = data.calenDate;
-					for(var i = 0; i < calenDate.length; i++) {
-						var d = calenDate[i];
-						var datum = {};
-						datum.workDate = d.dateFmt10;
-						datum.dayOfWeek = weekTrans[d.dateWeekday];
-						if (workLog[d.dateFmt10] != undefined) {
-							datum.id = workLog[d.dateFmt10].id;
-							datum.morning = workLog[d.dateFmt10].morning;
-							datum.afternoon = workLog[d.dateFmt10].afternoon;
-							datum.evening = workLog[d.dateFmt10].evening;
-						}else{
-							datum.morning = '';
-							datum.afternoon = '';
-							datum.evening = '';
-						}
-						tableDataTmp.push(datum);
-					}
-					vm.tableData = tableDataTmp;
-				}
-			});
+                url: '../../CBS/T/CALEN/EVENT/TYPE/list?_' + $.now(),
+                dataType: 'json',
+                data: JSON.stringify({}),
+                contentType: 'application/json',
+                type: 'POST',
+                success: function(data) {
+                    vm.eventTypes = $.map(data.rows, function(r, i) {
+                    	return {value: r.id, text: r.typeName};
+                    });
+                    for(var i = 0; i < data.rows.length; i++) {
+                    	var r = data.rows[i];
+                    	vm.eventTypeMap[r.id] = r;
+                    }
+                }
+            });
 		},
 		load: function() {
             $('#calendar').fullCalendar({
@@ -188,18 +85,14 @@ var vm = new Vue({
                         url: '../../CBS/T/CALEN/EVENT/list?_' + $.now(),
                         dataType: 'json',
                         contentType: 'application/json',
-                        data: JSON.stringify({eventType: 'WORKLOG', startDate: startDate, endDate: endDate}),
+                        data: JSON.stringify({startDate: startDate, endDate: endDate}),
                         type: 'POST',
                         success: function(data) {
-                            var events = $.map(data, function(datum, index) {
-                                var h = {};
-                                h.title = '[工作日记]' + datum.title;
-                                h.editable = datum.editable == 'TRUE';
-                                h.allDay = datum.allDay == 'TRUE';
-                                h.start = datum.start;
-                                return h;
-                            });
-							callback(events);
+                        	for(var i = 0; i < data.rows.length; i++) {
+                        		data.rows[i].title = '[' + vm.eventTypeMap[data.rows[i].eventType]['typeName'] + ']' + 
+                        								data.rows[i].title;
+                        	}
+							callback(data.rows);
                         }
                     });
                 }
