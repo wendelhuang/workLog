@@ -6,8 +6,9 @@
 <div id="dpLTE">
 	<div class="row">
 		<el-tabs v-model="activeName" @tab-click="tabClick">
-			<el-tab-pane label="收支趋势图" name="tab1">收支趋势图</el-tab-pane>
-			<el-tab-pane label="收支分类图" name="tab2">收支分类图</el-tab-pane>
+			<el-tab-pane label="收支分类图" name="tabByType"></el-tab-pane>
+			<el-tab-pane label="收支明细图" name="tabDetails"></el-tab-pane>
+			<el-tab-pane label="收支累计图" name="tabAddUp"></el-tab-pane>
 		</el-tabs>
 	</div>
 	<div class="row">

@@ -288,6 +288,19 @@ var vm = new Vue({
                 this.dateRange = ['' + new Date().getFullYear() + '-01-01', today()];
             }
             this.load();
+        },
+        tabClick: function(tab, event) {
+        	console.log(tab.paneName);
+        	eval('this.' + tab.paneName + 'Click()');
+        },
+        tabByTypeClick: function() {
+        	console.log('收支分类图');
+        },
+        tabDetailsClick: function() {
+        	console.log('收支明细图');
+        },
+        tabAddUpClick: function() {
+        	console.log('收支累计图');
         }
 	}
 })
