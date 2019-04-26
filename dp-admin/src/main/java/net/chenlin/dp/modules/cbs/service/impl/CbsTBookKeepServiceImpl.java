@@ -1,11 +1,5 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.Query;
 import net.chenlin.dp.common.entity.R;
@@ -15,6 +9,11 @@ import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.cbs.entity.CbsTKeepTypeEntity;
 import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -109,6 +108,22 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 		List<Map<String, Object>> out = cbsTBookKeepMapper.listReportBalance(uid, startDate, endDate, "OUT");
 		List<Map<String, Object>> in = cbsTBookKeepMapper.listReportBalance(uid, startDate, endDate, "IN");
 		return R.ok().put("out", out).put("in", in);
+	}
+
+	@Override
+	public R reportStream(Long uid, String startDate, String endDate) {
+		List<Map<String, Object>> out = cbsTBookKeepMapper.listReportStream(uid, startDate, endDate, "OUT");
+		List<Map<String, Object>> in = cbsTBookKeepMapper.listReportStream(uid, startDate, endDate, "IN");
+		return R.ok().put("out", out).put("in", in);
+	}
+
+	@Override
+	public R reportType(Long uid, String startDate, String endDate) {
+		List<Map<String, Object>> out = cbsTBookKeepMapper.listReportType(uid, startDate, endDate, "OUT");
+		List<Map<String, Object>> in = cbsTBookKeepMapper.listReportType(uid, startDate, endDate, "IN");
+		Map<String, Object> outSum = cbsTBookKeepMapper.getSumByOutIn(uid, startDate, endDate, "OUT");
+		Map<String, Object> inSum = cbsTBookKeepMapper.getSumByOutIn(uid, startDate, endDate, "OUT");
+		return R.ok().put("out", out).put("in", in).put("outSum", outSum).put("inSum", inSum);
 	}
 
 }

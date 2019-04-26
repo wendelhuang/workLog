@@ -23,4 +23,13 @@ public interface CbsTBookKeepMapper extends BaseMapper<CbsTBookKeepEntity> {
 
 	List<Map<String, Object>> listReportBalance(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
+
+	List<Map<String, Object>> listReportStream(@Param("uid") Long uid, @Param("startDate") String startDate,
+												@Param("endDate") String endDate, @Param("outIn") String outIn);
+
+	List<Map<String, Object>> listReportType(@Param("uid") Long uid, @Param("startDate") String startDate,
+											   @Param("endDate") String endDate, @Param("outIn") String outIn);
+
+	Map<String, Object> getSumByOutIn(@Param("uid") Long uid, @Param("startDate") String startDate,
+											 @Param("endDate") String endDate, @Param("outIn") String outIn);
 }
