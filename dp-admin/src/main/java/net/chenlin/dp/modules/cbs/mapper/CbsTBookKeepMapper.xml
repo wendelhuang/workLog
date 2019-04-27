@@ -6,9 +6,10 @@
 	<select id="listForPage" resultType="CbsTBookKeepEntity" flushCache="true">
 		SELECT
 			`ID`, 
-			`BOOK_ID`, 
 			`UID`, 
+			`EVENT_ID`, 
 			`KEEP_TIME`, 
+			`BOOK_ID`, 
 			`MONEY`, 
 			`TYPE_ID`, 
 			`OUT_IN`, 
@@ -23,9 +24,10 @@
 	
 	<insert id="save">
 		INSERT INTO CBS_T_BOOK_KEEP (
-			`BOOK_ID`, 
 			`UID`, 
+			`EVENT_ID`, 
 			`KEEP_TIME`, 
+			`BOOK_ID`, 
 			`MONEY`, 
 			`TYPE_ID`, 
 			`OUT_IN`, 
@@ -34,9 +36,10 @@
 			`UPDATE_TIME`
 		)
 		VALUES (
-			#{bookId}, 
 			#{uid}, 
+			#{eventId}, 
 			#{keepTime}, 
+			#{bookId}, 
 			#{money}, 
 			#{typeId}, 
 			#{outIn}, 
@@ -49,9 +52,10 @@
 	<select id="getObjectById" resultType="CbsTBookKeepEntity">
 		SELECT
 			`ID`, 
-			`BOOK_ID`, 
 			`UID`, 
+			`EVENT_ID`, 
 			`KEEP_TIME`, 
+			`BOOK_ID`, 
 			`MONEY`, 
 			`TYPE_ID`, 
 			`OUT_IN`, 
@@ -67,9 +71,10 @@
 	<update id="update">
 		UPDATE CBS_T_BOOK_KEEP
 	 	<set>
-			<if test="bookId != null">`BOOK_ID` = #{bookId}, </if>
 			<if test="uid != null">`UID` = #{uid}, </if>
+			<if test="eventId != null">`EVENT_ID` = #{eventId}, </if>
 			<if test="keepTime != null">`KEEP_TIME` = #{keepTime}, </if>
+			<if test="bookId != null">`BOOK_ID` = #{bookId}, </if>
 			<if test="money != null">`MONEY` = #{money}, </if>
 			<if test="typeId != null">`TYPE_ID` = #{typeId}, </if>
 			<if test="outIn != null">`OUT_IN` = #{outIn}, </if>
@@ -91,7 +96,7 @@
 			#{id}
 		</foreach>
 	</delete>
-
+	
 	<select id="listUserForPage" resultType="CbsTBookKeepEntity" flushCache="true">
 		SELECT
 			`ID`,
@@ -138,30 +143,44 @@
 			KEEP_TIME DESC
 	</select>
 
-
 	<select id="listReportBalance" resultType="java.util.Map">
+
 		select n.DTE, n.OUT_IN, n.C, n.S, sum(m.S) as SS from
 		(
-		select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
-		(
-		select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
-		(select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 >= #{startDate} and DATE_FMT_10 &lt;= #{endDate} ) calen left join
-		( select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
-		(select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP  where uid = #{uid} and OUT_IN = #{outIn}
-		and date_format(keep_time, '%Y-%m-%d') >= #{startDate} and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate} ) keep group by keep.DTE ) keep2 on calen.DATE_FMT_10 = keep2.DTE
-		) keep3
+			select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+			(
+				select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+				(
+					select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 between #{startDate} and #{endDate}
+				) calen left join
+				(
+					select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+					(
+						select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP
+						where uid = #{uid} and OUT_IN = #{outIn} and 
+						date_format(keep_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+					) keep group by keep.DTE ) keep2 
+				on calen.DATE_FMT_10 = keep2.DTE
+			) keep3
 		) m,
 		(
-		select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
-		(
-		select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
-		(select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 >= #{startDate} and DATE_FMT_10 &lt;= #{endDate} ) calen left join
-		( select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
-		(select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP  where uid = #{uid} and OUT_IN = #{outIn}
-		and date_format(keep_time, '%Y-%m-%d') >= #{startDate} and date_format(keep_time, '%Y-%m-%d') &lt;= #{endDate} ) keep group by keep.DTE ) keep2 on calen.DATE_FMT_10 = keep2.DTE
-		) keep3
-		) n where m.DTE &lt;= n.DTE group by n.DTE, n.OUT_IN, n.C, n.S order by n.DTE
-
+			select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+			(
+				select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+				(
+					select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 between #{startDate} and #{endDate}
+				) calen left join
+				(
+					select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+					(
+						select date_format(keep_time, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_T_BOOK_KEEP
+						where uid = #{uid} and OUT_IN = #{outIn} and 
+						date_format(keep_time, '%Y-%m-%d') between #{startDate} and #{endDate}
+					) keep group by keep.DTE ) keep2 
+				on calen.DATE_FMT_10 = keep2.DTE
+			) keep3
+		) n 
+		where m.DTE &lt;= n.DTE group by n.DTE, n.OUT_IN, n.C, n.S order by n.DTE
 	</select>
 
 	<select id="listReportStream" resultType="java.util.Map">

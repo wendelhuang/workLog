@@ -4,22 +4,33 @@ import java.util.Map;
 
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
-import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
+import net.chenlin.dp.modules.cbs.entity.CbsVBookKeepEntity;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
 
 /**
+ * VIEW
  * 
  * @author wendelhuang<weiwei5987(at)126.com>
  */
-public interface CbsTBookKeepService {
+public interface CbsVBookKeepService {
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param params
+	 * @return
+	 */
+	Page<CbsVBookKeepEntity> listCbsVBookKeep(Map<String, Object> params);
+
+	R listCbsVBookKeep(Map<String, Object> params, SysUserEntity sysUserEntity);
 
 	/**
 	 * 新增
 	 * 
-	 * @param cbsTBookKeep
+	 * @param cbsVBookKeep
 	 * @return
 	 */
-	R saveCbsTBookKeep(CbsTBookKeepEntity cbsTBookKeep);
+	R saveCbsVBookKeep(CbsVBookKeepEntity cbsVBookKeep);
 
 	/**
 	 * 根据id查询
@@ -27,15 +38,15 @@ public interface CbsTBookKeepService {
 	 * @param id
 	 * @return
 	 */
-	R getCbsTBookKeepById(Long id);
+	R getCbsVBookKeepById(Long id);
 
 	/**
 	 * 修改
 	 * 
-	 * @param cbsTBookKeep
+	 * @param cbsVBookKeep
 	 * @return
 	 */
-	R updateCbsTBookKeep(CbsTBookKeepEntity cbsTBookKeep);
+	R updateCbsVBookKeep(CbsVBookKeepEntity cbsVBookKeep);
 
 	/**
 	 * 列表
@@ -44,16 +55,6 @@ public interface CbsTBookKeepService {
 	 * @return
 	 */
 	R batchRemove(Long[] id);
-
-	/**
-	 * 分页查询
-	 * 
-	 * @param params
-	 * @return
-	 */
-	Page<CbsTBookKeepEntity> listPageCbsTBookKeep(Map<String, Object> params);
-
-	R listCbsTBookKeep(Map<String, Object> params, SysUserEntity sysUserEntity);
 
 	R reportBalance(Long uid, String startDate, String endDate);
 

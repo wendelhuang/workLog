@@ -15,7 +15,7 @@ function initialPage() {
 
 function getGrid() {
 	$('#dataGrid').bootstrapTableEx({
-		url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+		url: '../../CBS/V/BOOK/KEEP/list?_' + $.now(),
 		height: $(window).height()-56,
 		queryParams: function(params){
 			params.name = vm.keyword;
@@ -69,14 +69,14 @@ var vm = new Vue({
         loadSingleDate: function(params) {
             var dte = params.name;
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/list?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: dte, endDate: dte}),
                 type: 'POST',
                 success: function(data) {
                     var keepTypeData = data.cbsTKeepType;
-                    vm.tableData = data.cbsTBookKeep;
+                    vm.tableData = data.cbsVBookKeep;
 
                     var cbsTKeepType = {};
                     for(var i = 0; i < keepTypeData.length; i++) {
@@ -115,91 +115,6 @@ var vm = new Vue({
         togger: function() {
 		    this.show = !this.show;
         },
-		save: function() {
-			dialogOpen({
-				title: '新增',
-				url: 'cbs/cbstbookkeep/add.html?_' + $.now(),
-				width: '420px',
-				height: '350px',
-				yes : function(iframeId) {
-					top.frames[iframeId].vm.acceptClick();
-				},
-			});
-		},
-		edit: function(id) {
-            dialogOpen({
-                title: '编辑',
-                url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
-                width: '420px',
-                height: '350px',
-                success: function(iframeId){
-                    top.frames[iframeId].vm.cbsTBookKeep.id = id;
-                    top.frames[iframeId].vm.setForm();
-                },
-                yes: function(iframeId){
-                    top.frames[iframeId].vm.acceptClick();
-                }
-            });
-		},
-		remove: function(batch, id) {
-			var ids = [];
-			if (batch) {
-                var ck = $('#dataGrid').bootstrapTable('getSelections');
-                if (!checkedArray(ck)) {
-					return false;
-				}
-                $.each(ck, function(idx, item){
-                    ids[idx] = item.id;
-                });
-			} else {
-			    ids.push(id);
-			}
-            $.RemoveForm({
-                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
-                param: ids,
-                success: function(data) {
-                    vm.load();
-                }
-            });
-		},
-		editBookKeep: function(id) {
-			console.log(id);
-            dialogOpen({
-                title: '编辑',
-                url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
-                width: '420px',
-                height: '350px',
-                success: function(iframeId){
-                    top.frames[iframeId].vm.cbsTBookKeep.id = id;
-                    top.frames[iframeId].vm.setForm();
-                },
-                yes: function(iframeId){
-                    top.frames[iframeId].vm.acceptClick();
-                }
-            });
-		},
-		removeBookKeep: function(batch, id) {
-			console.log(id);
-            var ids = [];
-            if (batch) {
-                var ck = $('#dataGrid').bootstrapTable('getSelections');
-                if (!checkedArray(ck)) {
-                    return false;
-                }
-                $.each(ck, function(idx, item){
-                    ids[idx] = item.id;
-                });
-            } else {
-                ids.push(id);
-            }
-            $.RemoveForm({
-                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
-                param: ids,
-                success: function(data) {
-                    vm.load();
-                }
-            });
-		},
         selectDateRange: function(range) {
 		    if (range == '3month') {
 		        this.dateRange = [countDay(-90), today()];
@@ -232,7 +147,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportType?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportType?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
@@ -346,7 +261,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportStream?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportStream?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
@@ -410,7 +325,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportBalance?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportBalance?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),

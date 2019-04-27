@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.chenlin.dp.modules.cbs.dao.CbsVBookKeepMapper">
+	
+	<select id="listForPage" resultType="CbsVBookKeepEntity" flushCache="true">
+		SELECT
+			`EVENT_ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`EVENT_REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
+			`CLASS_NAME`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`EVENT_TYPE_REMARK`, 
+			`BOOK_ID`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`
+		FROM
+			CBS_V_BOOK_KEEP
+		ORDER BY
+			EVENT_ID DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO CBS_V_BOOK_KEEP (
+			`EVENT_ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`EVENT_REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
+			`CLASS_NAME`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`EVENT_TYPE_REMARK`, 
+			`BOOK_ID`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`
+		)
+		VALUES (
+			#{eventId}, 
+			#{uid}, 
+			#{calenId}, 
+			#{title}, 
+			#{allDay}, 
+			#{editable}, 
+			#{source}, 
+			#{start}, 
+			#{end}, 
+			#{url}, 
+			#{eventRemark}, 
+			#{eventType}, 
+			#{repeatType}, 
+			#{repeatExpression}, 
+			#{createTime}, 
+			#{updateTime}, 
+			#{typeCode}, 
+			#{typeName}, 
+			#{typeType}, 
+			#{className}, 
+			#{color}, 
+			#{backgroundColor}, 
+			#{borderColor}, 
+			#{textColor}, 
+			#{eventTypeRemark}, 
+			#{bookId}, 
+			#{money}, 
+			#{typeId}, 
+			#{outIn}, 
+			#{remark}
+		)
+	</insert>
+	
+	<select id="getObjectById" resultType="CbsVBookKeepEntity">
+		SELECT
+			`EVENT_ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`EVENT_REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
+			`CLASS_NAME`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`EVENT_TYPE_REMARK`, 
+			`BOOK_ID`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`
+		FROM
+			CBS_V_BOOK_KEEP
+		WHERE
+			EVENT_ID = #{eventId}
+	</select>
+	
+	<update id="update">
+		UPDATE CBS_V_BOOK_KEEP
+	 	<set>
+			<if test="uid != null">`UID` = #{uid}, </if>
+			<if test="calenId != null">`CALEN_ID` = #{calenId}, </if>
+			<if test="title != null">`TITLE` = #{title}, </if>
+			<if test="allDay != null">`ALL_DAY` = #{allDay}, </if>
+			<if test="editable != null">`EDITABLE` = #{editable}, </if>
+			<if test="source != null">`SOURCE` = #{source}, </if>
+			<if test="start != null">`START` = #{start}, </if>
+			<if test="end != null">`END` = #{end}, </if>
+			<if test="url != null">`URL` = #{url}, </if>
+			<if test="eventRemark != null">`EVENT_REMARK` = #{eventRemark}, </if>
+			<if test="eventType != null">`EVENT_TYPE` = #{eventType}, </if>
+			<if test="repeatType != null">`REPEAT_TYPE` = #{repeatType}, </if>
+			<if test="repeatExpression != null">`REPEAT_EXPRESSION` = #{repeatExpression}, </if>
+			<if test="createTime != null">`CREATE_TIME` = #{createTime}, </if>
+			<if test="updateTime != null">`UPDATE_TIME` = #{updateTime}, </if>
+			<if test="typeCode != null">`TYPE_CODE` = #{typeCode}, </if>
+			<if test="typeName != null">`TYPE_NAME` = #{typeName}, </if>
+			<if test="typeType != null">`TYPE_TYPE` = #{typeType}, </if>
+			<if test="className != null">`CLASS_NAME` = #{className}, </if>
+			<if test="color != null">`COLOR` = #{color}, </if>
+			<if test="backgroundColor != null">`BACKGROUND_COLOR` = #{backgroundColor}, </if>
+			<if test="borderColor != null">`BORDER_COLOR` = #{borderColor}, </if>
+			<if test="textColor != null">`TEXT_COLOR` = #{textColor}, </if>
+			<if test="eventTypeRemark != null">`EVENT_TYPE_REMARK` = #{eventTypeRemark}, </if>
+			<if test="bookId != null">`BOOK_ID` = #{bookId}, </if>
+			<if test="money != null">`MONEY` = #{money}, </if>
+			<if test="typeId != null">`TYPE_ID` = #{typeId}, </if>
+			<if test="outIn != null">`OUT_IN` = #{outIn}, </if>
+			<if test="remark != null">`REMARK` = #{remark}</if>
+		</set>
+		WHERE
+			EVENT_ID = #{eventId}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			CBS_V_BOOK_KEEP
+		WHERE
+			EVENT_ID IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+	
+	<select id="listUserForPage" resultType="CbsVBookKeepEntity" flushCache="true">
+		SELECT
+			`EVENT_ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`EVENT_REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
+			`CLASS_NAME`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`EVENT_TYPE_REMARK`, 
+			`BOOK_ID`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`
+		FROM
+			CBS_V_BOOK_KEEP
+		<where>
+			UID = #{userId}
+			<if test="startDate != null">and date_format(start, '%Y-%m-%d') >= #{startDate}</if>
+			<if test="endDate != null">and date_format(start, '%Y-%m-%d') &lt;= #{endDate}</if>
+		</where>
+		ORDER BY
+			START DESC
+	</select>
+	
+	<select id="listUser" resultType="CbsVBookKeepEntity" flushCache="true">
+		SELECT
+			`EVENT_ID`, 
+			`UID`, 
+			`CALEN_ID`, 
+			`TITLE`, 
+			`ALL_DAY`, 
+			`EDITABLE`, 
+			`SOURCE`, 
+			`START`, 
+			`END`, 
+			`URL`, 
+			`EVENT_REMARK`, 
+			`EVENT_TYPE`, 
+			`REPEAT_TYPE`, 
+			`REPEAT_EXPRESSION`, 
+			`CREATE_TIME`, 
+			`UPDATE_TIME`, 
+			`TYPE_CODE`, 
+			`TYPE_NAME`, 
+			`TYPE_TYPE`, 
+			`CLASS_NAME`, 
+			`COLOR`, 
+			`BACKGROUND_COLOR`, 
+			`BORDER_COLOR`, 
+			`TEXT_COLOR`, 
+			`EVENT_TYPE_REMARK`, 
+			`BOOK_ID`, 
+			`MONEY`, 
+			`TYPE_ID`, 
+			`OUT_IN`, 
+			`REMARK`
+		FROM
+			CBS_V_BOOK_KEEP
+		<where>
+			UID = #{userId}
+			<if test="startDate != null">and date_format(start, '%Y-%m-%d') >= #{startDate}</if>
+			<if test="endDate != null">and date_format(start, '%Y-%m-%d') &lt;= #{endDate}</if>
+		</where>
+		ORDER BY
+			start DESC
+	</select>
+	
+	<select id="listReportBalance" resultType="java.util.Map">
+		select n.DTE, n.OUT_IN, n.C, n.S, sum(m.S) as SS from
+		(
+			select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+			(
+				select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+				(
+					select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 between #{startDate} and #{endDate}
+				) calen left join
+				(
+					select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+					(
+						select DATE_FORMAT(start, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_V_BOOK_KEEP
+						where uid = #{uid} and OUT_IN = #{outIn} and 
+						DATE_FORMAT(start, '%Y-%m-%d') between #{startDate} and #{endDate}
+					) keep group by keep.DTE ) keep2 
+				on calen.DATE_FMT_10 = keep2.DTE
+			) keep3
+		) m,
+		(
+			select keep3.DTE, ifnull(keep3.OUT_IN, #{outIn}) as OUT_IN, ifnull(keep3.C, 0) as C , ifnull(keep3.S, 0) as S from
+			(
+				select calen.DATE_FMT_10 as DTE, keep2.OUT_IN,  keep2.C, keep2.S from
+				(
+					select DATE_FMT_10 from CBS_T_CALEN_DATE where DATE_FMT_10 between #{startDate} and #{endDate}
+				) calen left join
+				(
+					select DTE, OUT_IN, count(*) as C, SUM(MONEY) as S from
+					(
+						select DATE_FORMAT(start, '%Y-%m-%d') as DTE, OUT_IN, MONEY from  CBS_V_BOOK_KEEP
+						where uid = #{uid} and OUT_IN = #{outIn} and 
+						DATE_FORMAT(start, '%Y-%m-%d') between #{startDate} and #{endDate}
+					) keep group by keep.DTE ) keep2 
+				on calen.DATE_FMT_10 = keep2.DTE
+			) keep3
+		) n 
+		where m.DTE &lt;= n.DTE group by n.DTE, n.OUT_IN, n.C, n.S order by n.DTE
+
+	</select>
+
+	<select id="listReportStream" resultType="java.util.Map">
+		select * from
+		(
+			select
+			T1.DTE, IFNULL(T2.UID, #{uid}) AS UID, IFNULL(T2.MONEY, 0) AS MONEY, IFNULL(T2.OUT_IN, #{outIn}) AS OUT_IN
+			from
+				(
+					select * from
+					(select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) DTE from
+					(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+					(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+					(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+					(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+					(select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+					where DTE between #{startDate} and #{endDate}
+				) T1
+			left join
+				(
+					select DATE_FORMAT(start, '%Y-%m-%d') DTE, UID, SUM(MONEY) AS MONEY, OUT_IN
+					from
+					CBS_V_BOOK_KEEP where UID = #{uid} and DATE_FORMAT(start, '%Y-%m-%d') between #{startDate} and #{endDate} and OUT_IN = #{outIn} group by DTE
+				) T2
+			ON T1.DTE = T2.DTE
+		) T order by DTE
+	</select>
+
+	<select id="listReportType" resultType="java.util.Map">
+		select
+		T1.MONEY, T2.ID, IFNULL(T2.TYPE_NAME, '其他') AS TYPE_NAME, IFNULL(T2.TYPE_ICON,'') AS TYPE_ICON
+		FROM
+			(
+					SELECT TYPE_ID, SUM(MONEY) AS MONEY FROM CBS_V_BOOK_KEEP WHERE UID = #{uid} AND DATE_FORMAT(start, '%Y-%m-%d') BETWEEN #{startDate} and #{endDate} and OUT_IN = #{outIn} GROUP BY TYPE_ID
+			) T1
+		LEFT JOIN
+			(
+					SELECT * FROM CBS_T_KEEP_TYPE WHERE UID = #{uid}
+			) T2
+		ON T1.TYPE_ID = T2.ID
+	</select>
+
+	<select id="getSumByOutIn" resultType="java.util.Map">
+		SELECT SUM(MONEY) AS MONEY FROM CBS_V_BOOK_KEEP WHERE UID = #{uid} AND DATE_FORMAT(start, '%Y-%m-%d') BETWEEN #{startDate} and #{endDate} and OUT_IN = #{outIn}
+	</select>
+
+	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
+
+</mapper>

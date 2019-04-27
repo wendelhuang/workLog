@@ -1,5 +1,11 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.Query;
 import net.chenlin.dp.common.entity.R;
@@ -9,11 +15,6 @@ import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.cbs.entity.CbsTKeepTypeEntity;
 import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -27,33 +28,6 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 
 	@Autowired
 	private CbsTKeepTypeServiceImpl cbsTKeepTypeServiceImpl;
-
-	/**
-	 * 分页查询
-	 * 
-	 * @param params
-	 * @return
-	 */
-	@Override
-	public R listCbsTBookKeep(Map<String, Object> params, SysUserEntity sysUserEntity) {
-		params.put("userId", sysUserEntity.getUserId());
-		R r = R.ok();
-		Query query = new Query(params);
-		if (params.get("pageSize") != null) {
-			Page<CbsTBookKeepEntity> page = new Page<>(query);
-			cbsTBookKeepMapper.listUserForPage(page, query);
-			r.put("cbsTBookKeep", page);
-		} else {
-			List<CbsTBookKeepEntity> list = cbsTBookKeepMapper.listUser(query);
-			r.put("cbsTBookKeep", list);
-		}
-
-		List<CbsTKeepTypeEntity> cbsTKeepTypeEntities = cbsTKeepTypeServiceImpl
-				.listAllCbsTKeepTypeByUser(sysUserEntity);
-
-		r.put("cbsTKeepType", cbsTKeepTypeEntities);
-		return r;
-	}
 
 	/**
 	 * 新增
@@ -101,6 +75,41 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 	public R batchRemove(Long[] id) {
 		int count = cbsTBookKeepMapper.batchRemove(id);
 		return CommonUtils.msg(id, count);
+	}
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param params
+	 * @return
+	 */
+	@Override
+	public Page<CbsTBookKeepEntity> listPageCbsTBookKeep(Map<String, Object> params) {
+		Query query = new Query(params);
+		Page<CbsTBookKeepEntity> page = new Page<>(query);
+		cbsTBookKeepMapper.listForPage(page, query);
+		return page;
+	}
+
+	@Override
+	public R listCbsTBookKeep(Map<String, Object> params, SysUserEntity sysUserEntity) {
+		params.put("userId", sysUserEntity.getUserId());
+		R r = R.ok();
+		Query query = new Query(params);
+		if (params.get("pageSize") != null) {
+			Page<CbsTBookKeepEntity> page = new Page<>(query);
+			cbsTBookKeepMapper.listUserForPage(page, query);
+			r.put("cbsTBookKeep", page);
+		} else {
+			List<CbsTBookKeepEntity> list = cbsTBookKeepMapper.listUser(query);
+			r.put("cbsTBookKeep", list);
+		}
+
+		List<CbsTKeepTypeEntity> cbsTKeepTypeEntities = cbsTKeepTypeServiceImpl
+				.listAllCbsTKeepTypeByUser(sysUserEntity);
+
+		r.put("cbsTKeepType", cbsTKeepTypeEntities);
+		return r;
 	}
 
 	@Override

@@ -64,7 +64,7 @@
 			ID DESC
 	</select>
 	
-	<insert id="save">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO CBS_T_CALEN_EVENT (
 			`UID`, 
 			`CALEN_ID`, 

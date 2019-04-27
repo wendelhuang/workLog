@@ -10,13 +10,15 @@ import net.chenlin.dp.common.base.BaseMapper;
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.Query;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
+import net.chenlin.dp.modules.cbs.entity.CbsVBookKeepEntity;
 
 /**
+ * VIEW
  * 
  * @author wendelhuang<weiwei5987(at)126.com>
  */
 @MapperScan
-public interface CbsTBookKeepMapper extends BaseMapper<CbsTBookKeepEntity> {
+public interface CbsVBookKeepMapper extends BaseMapper<CbsVBookKeepEntity> {
 	List<CbsTBookKeepEntity> listUserForPage(Page<CbsTBookKeepEntity> page, Query query);
 
 	List<CbsTBookKeepEntity> listUser(Query query);
