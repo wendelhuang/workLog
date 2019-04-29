@@ -1,11 +1,5 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.Query;
 import net.chenlin.dp.common.entity.R;
@@ -15,6 +9,11 @@ import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.cbs.entity.CbsTKeepTypeEntity;
 import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -133,6 +132,12 @@ public class CbsTBookKeepServiceImpl implements CbsTBookKeepService {
 		Map<String, Object> outSum = cbsTBookKeepMapper.getSumByOutIn(uid, startDate, endDate, "OUT");
 		Map<String, Object> inSum = cbsTBookKeepMapper.getSumByOutIn(uid, startDate, endDate, "OUT");
 		return R.ok().put("out", out).put("in", in).put("outSum", outSum).put("inSum", inSum);
+	}
+
+	@Override
+	public R removeByEventId(Long[] eventId) {
+		int count = cbsTBookKeepMapper.removeByEventId(eventId);
+		return CommonUtils.msg(eventId, count);
 	}
 
 }

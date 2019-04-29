@@ -55,7 +55,9 @@ var vm = new Vue({
 		pageNumber: 1,
 		pageSize: 10,
 		total: 0,
-		cbsTKeepType: {}
+		cbsTKeepType: {},
+		accountBook: 0,
+		accountBooks: []
 	},
     mounted: function() {
         this.load();
@@ -109,6 +111,28 @@ var vm = new Vue({
 		},
 		load: function() {
             this.getTableData(this.pageNumber, this.pageSize);
+            this.getAccountBooks();
+		},
+		getAccountBooks: function() {
+            $.post({
+                url: '../../CBS/T/CALEN/EVENT/TYPE/list?_' + $.now(),
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({}),
+                type: 'POST',
+                success: function(data) {
+                	if (data.code == 0) {
+                        vm.accountBooks = [];
+                		for (var i = 0; i < data.rows.length; i++) {
+                			var datum = data.rows[i];
+                			if (i == 0) {
+                				vm.accountBook = datum.id;
+							}
+                            vm.accountBooks.push({value: datum.id, label: datum.typeName});
+						}
+					}
+                }
+            });
 		},
 		save: function() {
 			dialogOpen({
@@ -121,50 +145,14 @@ var vm = new Vue({
 				},
 			});
 		},
-		edit: function(id) {
+		editBookKeep: function(id) {
             dialogOpen({
                 title: '编辑',
                 url: 'cbs/cbsvbookkeep/edit.html?_' + $.now(),
                 width: '420px',
                 height: '500px',
                 success: function(iframeId){
-                    top.frames[iframeId].vm.cbsVBookKeep.id = id;
-                    top.frames[iframeId].vm.setForm();
-                },
-                yes: function(iframeId){
-                    top.frames[iframeId].vm.acceptClick();
-                }
-            });
-		},
-		remove: function(batch, id) {
-			var ids = [];
-			if (batch) {
-                var ck = $('#dataGrid').bootstrapTable('getSelections');
-                if (!checkedArray(ck)) {
-					return false;
-				}
-                $.each(ck, function(idx, item){
-                    ids[idx] = item.id;
-                });
-			} else {
-			    ids.push(id);
-			}
-            $.RemoveForm({
-                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
-                param: ids,
-                success: function(data) {
-                    vm.load();
-                }
-            });
-		},
-		editBookKeep: function(id) {
-            dialogOpen({
-                title: '编辑',
-                url: 'cbs/cbstbookkeep/edit.html?_' + $.now(),
-                width: '420px',
-                height: '500px',
-                success: function(iframeId){
-                    top.frames[iframeId].vm.cbsVBookKeep.id = id;
+                    top.frames[iframeId].vm.cbsVBookKeep.eventId = id;
                     top.frames[iframeId].vm.setForm();
                 },
                 yes: function(iframeId){

@@ -1,11 +1,11 @@
 package net.chenlin.dp.modules.cbs.service;
 
-import java.util.Map;
-
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
+
+import java.util.Map;
 
 /**
  * 
@@ -60,5 +60,7 @@ public interface CbsTBookKeepService {
 	R reportStream(Long uid, String startDate, String endDate);
 
 	R reportType(Long uid, String startDate, String endDate);
+
+	R removeByEventId(Long[] eventId);
 
 }

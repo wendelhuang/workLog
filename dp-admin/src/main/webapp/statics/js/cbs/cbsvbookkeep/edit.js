@@ -11,7 +11,7 @@ function initialPage() {
         value: new Date(),
         isInitValue: true,
         done: function(value, date, endDate){
-            vm.cbsVBookKeep.keepTime = value;
+            //vm.cbsVBookKeep.keepTime = value;
         }
     })
 }
@@ -19,7 +19,7 @@ var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		cbsVBookKeep: {
-			id: 0,
+			eventId: 0,
 			typeId: ''
 		},
 		options: []
@@ -30,8 +30,8 @@ var vm = new Vue({
 	methods : {
 		setForm: function() {
 			$.SetForm({
-				url: '../../CBS/T/BOOK/KEEP/info?_' + $.now(),
-		    	param: vm.cbsVBookKeep.id,
+				url: '../../CBS/V/BOOK/KEEP/info?_' + $.now(),
+		    	param: vm.cbsVBookKeep.eventId,
 		    	success: function(data) {
 		    		vm.cbsVBookKeep = data;
 		    	}

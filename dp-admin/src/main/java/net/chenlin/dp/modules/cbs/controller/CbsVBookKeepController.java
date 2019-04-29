@@ -1,12 +1,5 @@
 package net.chenlin.dp.modules.cbs.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import net.chenlin.dp.common.annotation.SysLog;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
@@ -16,6 +9,12 @@ import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.cbs.service.CbsTCalenEventService;
 import net.chenlin.dp.modules.cbs.service.CbsVBookKeepService;
 import net.chenlin.dp.modules.sys.controller.AbstractController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 /**
  * VIEW
@@ -106,7 +105,8 @@ public class CbsVBookKeepController extends AbstractController {
 	@SysLog("删除VIEW")
 	@RequestMapping("/remove")
 	public R batchRemove(@RequestBody Long[] id) {
-		return cbsVBookKeepService.batchRemove(id);
+		cbsTBookKeepService.removeByEventId(id);
+		return cbsTCalenEventService.batchRemove(id);
 	}
 
 	@SysLog("reportBalance")

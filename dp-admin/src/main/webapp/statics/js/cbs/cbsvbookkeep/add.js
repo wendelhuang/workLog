@@ -8,10 +8,11 @@ var vm = new Vue({
 	el:'#dpLTE',
 	data: {
 		cbsVBookKeep: {
-			id: 0,
+			eventId: 0,
 			outIn: 'OUT',
 			start: formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'),
-			typeId: ''
+			typeId: '',
+			eventType: $.currentIframe().vm.accountBook
 		},
 		options: [],
 	},

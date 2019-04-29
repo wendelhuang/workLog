@@ -32,4 +32,6 @@ public interface CbsTBookKeepMapper extends BaseMapper<CbsTBookKeepEntity> {
 
 	Map<String, Object> getSumByOutIn(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
+
+	int removeByEventId(@Param("eventId") Long[] eventId);
 }

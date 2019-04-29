@@ -15,7 +15,7 @@ function initialPage() {
 
 function getGrid() {
 	$('#dataGrid').bootstrapTableEx({
-		url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+		url: '../../CBS/V/BOOK/KEEP/list?_' + $.now(),
 		height: $(window).height()-56,
 		queryParams: function(params){
 			params.name = vm.keyword;
@@ -69,7 +69,7 @@ var vm = new Vue({
         loadSingleDate: function(params) {
             var dte = params.name;
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/list?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/list?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: dte, endDate: dte}),
@@ -155,7 +155,7 @@ var vm = new Vue({
 			    ids.push(id);
 			}
             $.RemoveForm({
-                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/remove?_' + $.now(),
                 param: ids,
                 success: function(data) {
                     vm.load();
@@ -193,7 +193,7 @@ var vm = new Vue({
                 ids.push(id);
             }
             $.RemoveForm({
-                url: '../../CBS/T/BOOK/KEEP/remove?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/remove?_' + $.now(),
                 param: ids,
                 success: function(data) {
                     vm.load();
@@ -232,7 +232,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportType?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportType?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
@@ -346,7 +346,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportStream?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportStream?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
@@ -395,7 +395,7 @@ var vm = new Vue({
                     };
                     myChart.hideLoading();
                     // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option, true);
+                    myChart.setOption(option);
                 }
             });
         },
@@ -410,7 +410,7 @@ var vm = new Vue({
                 text: '数据努力加载中...'
             });
             $.post({
-                url: '../../CBS/T/BOOK/KEEP/reportBalance?_' + $.now(),
+                url: '../../CBS/V/BOOK/KEEP/reportBalance?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
                 data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
@@ -468,7 +468,7 @@ var vm = new Vue({
                     };
                     myChart.hideLoading();
                     // 使用刚指定的配置项和数据显示图表。
-                    myChart.setOption(option, true);
+                    myChart.setOption(option);
                 }
             });
         }

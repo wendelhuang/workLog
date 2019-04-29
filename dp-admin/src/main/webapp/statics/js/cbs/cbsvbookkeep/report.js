@@ -52,10 +52,13 @@ var vm = new Vue({
 	data: {
 		keyword: null,
 		tableData: [],
-        dateRange: [countDay(-90), today()],
+        dateRange: [formatDate(new Date(), 'yyyy') + '-01-01', today()],
         show: false,
         activeName: 'tabByType',
-        showOutType: true
+        showOutType: true,
+        offset: 0,
+        periodIndex: 0,
+        periods: [{value: 'year', name: '年'}, {value: 'month', name: '月'}, {value: 'week', name: '周'}]
 
 	},
     mounted: function() {

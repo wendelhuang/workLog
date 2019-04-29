@@ -227,6 +227,13 @@
 		SELECT SUM(MONEY) AS MONEY FROM CBS_T_BOOK_KEEP WHERE UID = #{uid} AND DATE_FORMAT(keep_time, '%Y-%m-%d') BETWEEN #{startDate} and #{endDate} and OUT_IN = #{outIn}
 	</select>
 
+	<delete id="removeByEventId">
+		DELETE FROM CBS_T_BOOK_KEEP WHERE EVENT_ID in
+		<foreach item="id" collection="eventId" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 
 </mapper>
