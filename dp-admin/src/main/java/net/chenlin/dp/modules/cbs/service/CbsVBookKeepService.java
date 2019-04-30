@@ -1,11 +1,11 @@
 package net.chenlin.dp.modules.cbs.service;
 
-import java.util.Map;
-
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsVBookKeepEntity;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
+
+import java.util.Map;
 
 /**
  * VIEW
@@ -47,6 +47,8 @@ public interface CbsVBookKeepService {
 	 * @return
 	 */
 	R updateCbsVBookKeep(CbsVBookKeepEntity cbsVBookKeep);
+
+	R updateCbsVBookKeepByEventId(CbsVBookKeepEntity cbsVBookKeep);
 
 	/**
 	 * 列表

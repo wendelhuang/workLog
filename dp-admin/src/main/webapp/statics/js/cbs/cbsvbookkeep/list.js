@@ -87,6 +87,7 @@ var vm = new Vue({
 						vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
 						vm.tableData[i].typeIcon = '';
 						vm.tableData[i].typeName = '';
+						vm.tableData[i].start = vm.tableData[i].start.substring(0, 16);
 						if (vm.tableData[i].typeId != undefined) {
 							vm.tableData[i].typeIcon = vm.cbsTKeepType[vm.tableData[i].typeId].typeIcon;
 							vm.tableData[i].typeName = vm.cbsTKeepType[vm.tableData[i].typeId].typeName;
@@ -118,7 +119,7 @@ var vm = new Vue({
                 url: '../../CBS/T/CALEN/EVENT/TYPE/list?_' + $.now(),
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({}),
+                data: JSON.stringify({typeType: 'BOOK_KEEP'}),
                 type: 'POST',
                 success: function(data) {
                 	if (data.code == 0) {

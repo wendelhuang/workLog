@@ -93,7 +93,12 @@ public class CbsVBookKeepController extends AbstractController {
 	@SysLog("修改VIEW")
 	@RequestMapping("/update")
 	public R update(@RequestBody CbsVBookKeepEntity cbsVBookKeep) {
-		return cbsVBookKeepService.updateCbsVBookKeep(cbsVBookKeep);
+		CbsTCalenEventEntity cbsTCalenEvent = new CbsTCalenEventEntity();
+		cbsTCalenEvent.setId(cbsVBookKeep.getEventId());
+		cbsTCalenEvent.setStart(cbsVBookKeep.getStart());
+		cbsTCalenEventService.updateCbsTCalenEvent(cbsTCalenEvent);
+
+		return cbsVBookKeepService.updateCbsVBookKeepByEventId(cbsVBookKeep);
 	}
 
 	/**

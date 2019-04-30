@@ -18,7 +18,7 @@
 				<el-button type="primary" size="medium" @click="selectDateRange('6month')">六个月</el-button>
 				<el-button type="primary" size="medium" @click="selectDateRange('1year')">一年</el-button>-->
 				<el-button type="primary" size="medium" @click="backward()"><i class="fa fa-backward"></i></el-button>
-				<el-button type="primary" size="medium" @click="selectDateRange('thisyear')">{{periods[periodIndex]['name']}}</el-button>
+				<el-button type="primary" size="medium" @click="selectDateRange('thisyear')">{{periods[periodIndex]['name']}}度</el-button>
 				<el-button type="primary" size="medium" @click="forward()"><i class="fa fa-forward"></i></el-button>
 				<el-button type="primary" size="medium" @click="togger()">自定义</el-button>
 			</el-button-group>

@@ -4,13 +4,22 @@
 </head>
 <body>
 <div id="dpLTE">
-	<div class="row">
-		<div class="col-md-4">
+	<el-row>
+		<el-col :span="12">
 			<el-select v-model="accountBook" placeholder="请选择">
 				<el-option v-for="item in accountBooks" :key="item.value" :label="item.label" :value="item.value">
 				</el-option>
 			</el-select>
-		</div>
+		</el-col>
+		<el-col :span="12">
+			<div class="btn-toolbar pull-right">
+				<div class="btn-group">
+					<a v-if="hasPermission('CBS:V:BOOK:KEEP:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
+					<a v-if="hasPermission('CBS:V:BOOK:KEEP:save')" class="btn btn-default" @click="save"><i class="fa fa-plus"></i>&nbsp;新增</a>
+				</div>
+			</div>
+		</el-col>
+	</el-row>
 		<!--<div class="col-md-4 form-inline pull-left">
 			<div class="form-group">
 				<input v-model="keyword" @keyup.enter="load" type="text" class="form-control" placeholder="请输入查询关键字" style="width: 220px;" />
@@ -19,15 +28,6 @@
 				<a class="btn btn-primary" @click="load"><i class="fa fa-search"></i>&nbsp;查询</a>
 			</div>
 		</div>-->
-		<div class="col-md-8">
-			<div class="btn-toolbar pull-right">
-				<div class="btn-group">
-					<a v-if="hasPermission('CBS:V:BOOK:KEEP:list')" class="btn btn-default" onclick="reload();"><i class="fa fa-refresh"></i>&nbsp;刷新</a>
-					<a v-if="hasPermission('CBS:V:BOOK:KEEP:save')" class="btn btn-default" @click="save"><i class="fa fa-plus"></i>&nbsp;新增</a>
-				</div>
-			</div>
-		</div>
-	</div>
 	<div class="row">
 		<div class="pull-right">
 			<el-pagination layout="prev, pager, next, jumper" :total="total" :current-page.sync="pageNumber" @current-change="getTableData(pageNumber, pageSize)">

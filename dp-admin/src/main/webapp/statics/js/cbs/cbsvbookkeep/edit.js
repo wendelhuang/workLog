@@ -20,7 +20,10 @@ var vm = new Vue({
 	data: {
 		cbsVBookKeep: {
 			eventId: 0,
-			typeId: ''
+			typeId: '',
+            startDate: new Date(),
+            startTime: new Date(),
+            start: new Date()
 		},
 		options: []
 	},
@@ -34,6 +37,8 @@ var vm = new Vue({
 		    	param: vm.cbsVBookKeep.eventId,
 		    	success: function(data) {
 		    		vm.cbsVBookKeep = data;
+		    		vm.cbsVBookKeep.startDate = vm.cbsVBookKeep.start;
+		    		vm.cbsVBookKeep.startTime = vm.cbsVBookKeep.start;
 		    	}
 			});
 		},
@@ -42,13 +47,26 @@ var vm = new Vue({
 		        return false;
 		    }
 		    $.ConfirmForm({
-		    	url: '../../CBS/T/BOOK/KEEP/update?_' + $.now(),
+		    	url: '../../CBS/V/BOOK/KEEP/update?_' + $.now(),
 		    	param: vm.cbsVBookKeep,
 		    	success: function(data) {
 		    		$.currentIframe().vm.load();
 		    	}
 		    });
 		},
+        dateChange: function(val) {
+			console.log(this.cbsVBookKeep);
+			console.log(this.cbsVBookKeep.startDate);
+            this.cbsVBookKeep.start.setFullYear(this.cbsVBookKeep.startDate.getFullYear());
+            this.cbsVBookKeep.start.setMonth(this.cbsVBookKeep.startDate.getMonth());
+            this.cbsVBookKeep.start.setDate(this.cbsVBookKeep.startDate.getDate());
+            console.log(this.cbsVBookKeep.start);
+        },
+        timeChange: function(val) {
+            this.cbsVBookKeep.start.setHours(this.cbsVBookKeep.startTime.getHours());
+            this.cbsVBookKeep.start.setMinutes(this.cbsVBookKeep.startTime.getMinutes());
+            console.log(this.cbsVBookKeep.start);
+        },
 		loadKeepType: function() {
             $.post({
                 url: '../../CBS/T/KEEP/TYPE/listAll?_' + $.now(),

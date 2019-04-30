@@ -364,6 +364,20 @@
 		SELECT SUM(MONEY) AS MONEY FROM CBS_V_BOOK_KEEP WHERE UID = #{uid} AND DATE_FORMAT(start, '%Y-%m-%d') BETWEEN #{startDate} and #{endDate} and OUT_IN = #{outIn}
 	</select>
 
+	<update id="updateByEventId">
+		UPDATE CBS_T_BOOK_KEEP
+		<set>
+			<if test="start != null">`KEEP_TIME` = #{start}, </if>
+			<!--<if test="bookId != null">`BOOK_ID` = #{bookId}, </if>-->
+			<if test="money != null">`MONEY` = #{money}, </if>
+			<if test="typeId != null">`TYPE_ID` = #{typeId}, </if>
+			<if test="outIn != null">`OUT_IN` = #{outIn}, </if>
+			<if test="remark != null">`REMARK` = #{remark}</if>
+		</set>
+		WHERE
+		EVENT_ID = #{eventId}
+	</update>
+
 	<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>
 
 </mapper>

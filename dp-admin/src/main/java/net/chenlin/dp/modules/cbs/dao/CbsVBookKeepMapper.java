@@ -23,6 +23,8 @@ public interface CbsVBookKeepMapper extends BaseMapper<CbsVBookKeepEntity> {
 
 	List<CbsTBookKeepEntity> listUser(Query query);
 
+	int updateByEventId(CbsVBookKeepEntity cbsVBookKeepEntity);
+
 	List<Map<String, Object>> listReportBalance(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
 

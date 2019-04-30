@@ -10,7 +10,9 @@ var vm = new Vue({
 		cbsVBookKeep: {
 			eventId: 0,
 			outIn: 'OUT',
-			start: formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss'),
+			startDate: new Date(),
+			startTime: new Date(),
+			start: new Date(),
 			typeId: '',
 			eventType: $.currentIframe().vm.accountBook
 		},
@@ -31,6 +33,15 @@ var vm = new Vue({
 		    		$.currentIframe().vm.load();
 		    	}
 		    });
+		},
+        dateChange: function(val) {
+            this.cbsVBookKeep.start.setFullYear(this.cbsVBookKeep.startDate.getFullYear());
+            this.cbsVBookKeep.start.setMonth(this.cbsVBookKeep.startDate.getMonth());
+            this.cbsVBookKeep.start.setDate(this.cbsVBookKeep.startDate.getDate());
+        },
+		timeChange: function(val) {
+            this.cbsVBookKeep.start.setHours(this.cbsVBookKeep.startTime.getHours());
+            this.cbsVBookKeep.start.setMinutes(this.cbsVBookKeep.startTime.getMinutes());
 		},
 		loadKeepType: function() {
             $.post({

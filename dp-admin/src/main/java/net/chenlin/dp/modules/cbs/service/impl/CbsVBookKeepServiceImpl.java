@@ -101,6 +101,12 @@ public class CbsVBookKeepServiceImpl implements CbsVBookKeepService {
 		return CommonUtils.msg(count);
 	}
 
+	@Override
+	public R updateCbsVBookKeepByEventId(CbsVBookKeepEntity cbsVBookKeep) {
+		int count = cbsVBookKeepMapper.updateByEventId(cbsVBookKeep);
+		return CommonUtils.msg(count);
+	}
+
 	/**
 	 * 列表
 	 * 
