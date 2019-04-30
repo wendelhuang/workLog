@@ -36,9 +36,17 @@ var vm = new Vue({
 				url: '../../CBS/V/BOOK/KEEP/info?_' + $.now(),
 		    	param: vm.cbsVBookKeep.eventId,
 		    	success: function(data) {
+                    /**
+					 * vue会为初始成员设置set和get
+                     */
+					data.startDate = data.start;
+					data.startTime = data.start;
 		    		vm.cbsVBookKeep = data;
-		    		vm.cbsVBookKeep.startDate = vm.cbsVBookKeep.start;
-		    		vm.cbsVBookKeep.startTime = vm.cbsVBookKeep.start;
+		    		/*vm.cbsVBookKeep.startDate = vm.cbsVBookKeep.start;*/
+                    /**
+					 * 方法二
+                     */
+					 /* Vue.set(vm.cbsVBookKeep, 'startDate', vm.cbsVBookKeep.start); */
 		    	}
 			});
 		},
@@ -55,17 +63,10 @@ var vm = new Vue({
 		    });
 		},
         dateChange: function(val) {
-			console.log(this.cbsVBookKeep);
-			console.log(this.cbsVBookKeep.startDate);
-            this.cbsVBookKeep.start.setFullYear(this.cbsVBookKeep.startDate.getFullYear());
-            this.cbsVBookKeep.start.setMonth(this.cbsVBookKeep.startDate.getMonth());
-            this.cbsVBookKeep.start.setDate(this.cbsVBookKeep.startDate.getDate());
-            console.log(this.cbsVBookKeep.start);
+            this.cbsVBookKeep.start = (formatDate(this.cbsVBookKeep.startDate, 'yyyy-MM-dd')) + this.cbsVBookKeep.start.substring(10);
         },
         timeChange: function(val) {
-            this.cbsVBookKeep.start.setHours(this.cbsVBookKeep.startTime.getHours());
-            this.cbsVBookKeep.start.setMinutes(this.cbsVBookKeep.startTime.getMinutes());
-            console.log(this.cbsVBookKeep.start);
+			this.cbsVBookKeep.start = this.cbsVBookKeep.start.substring(0, 11) + formatDate(val, 'hh:mm:ss');
         },
 		loadKeepType: function() {
             $.post({
