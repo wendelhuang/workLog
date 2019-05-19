@@ -40,6 +40,7 @@
                 /login.html = anon
                 /sys/login = anon
                 /sys/captcha.jpg = anon
+                /public/** = anon
             </value>
         </property>
     </bean>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('')"></head>
+<style>
+	.el-row-margin {
+		margin-bottom: 20px;
+	}
+	.el-row-margin-last {
+		margin-bottom: 0;
+	}
+	.el-select .el-input {
+		width: 250px;
+	}
+</style>
+</head>
+<body>
+<div id="dpLTE">
+	<el-row type="flex" justify="center" align="middle">
+		<el-col :span="20">
+			<el-tabs v-model="activeName" @tab-click="">
+				<el-tab-pane label="税费计算器" name="tabTax">
+					<template>
+						<el-row type="flex" justify="center" align="middle">
+							<el-col :span="18">
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">房屋<el-row></el-col>
+									<el-col :span="16">
+										<el-radio-group v-model="houseTypeTax" @change="houseTypeTaxChange">
+											<el-radio label="new">新房</el-radio>
+											<el-radio label="secondHand">二手房</el-radio>
+										</el-radio-group>
+									</el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">面积<el-row></el-col>
+									<el-col :span="12">
+										<el-input placeholder="请输入房屋面积" v-model="areaTax"></el-input>
+									</el-col>
+									<el-col :span="4"><i>平米</i></el-col>
+								</el-row>
+								<el-row align="middle" :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">单价<el-row></el-col>
+									<el-col :span="12">
+										<el-input placeholder="请输入房屋单价" v-model="unitPriceTax"></el-input>
+									</el-col>
+									<el-col :span="4"><i>元/平米</i></el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">总价<el-row></el-col>
+									<el-col :span="12">
+										<el-input v-model="totalTax" placeholder="请输入房屋总价"></el-input>
+									</el-col>
+									<el-col :span="4"><i>万元</i></el-col>
+								</el-row>
+								<div v-if="houseNewTax">
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">买方家庭首次购房<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="firstTimeTax">
+												<el-radio label="yes">是</el-radio>
+												<el-radio label="no">否</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">有无电梯<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="elevatorTax">
+												<el-radio label="yes">是</el-radio>
+												<el-radio label="no">否</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+								</div>
+								<div id="second" v-if="!houseNewTax">
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">计征方式<el-row></el-col>
+										<el-col :span="16">
+											<el-select v-model="levyMethodTax">
+												<el-option v-for="item in levyMethodTaxOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+											</el-select>
+										</el-col>
+									</el-row>
+									
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">房产性质<el-row></el-col>
+										<el-col :span="16">
+											<el-select v-model="houseClassifyTax">
+												<el-option v-for="item in houseClassifyTaxOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+											</el-select>
+										</el-col>
+									</el-row>
+									
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">卖方房产购置年限<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="purchasePeriod">
+												<el-radio label="5">满5年</el-radio>
+												<el-radio label="2">满2年</el-radio>
+												<el-radio label="0">不满2年</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+									
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">买方家庭首次购房<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="firstPurchase">
+												<el-radio label="yes">是</el-radio>
+												<el-radio label="no">否</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">卖方家庭唯一住房<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="only">
+												<el-radio label="yes">是</el-radio>
+												<el-radio label="no">否</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+								</div>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="16" :offset="8">
+										<el-button type="primary" size="medium">开始计算</el-button>
+										<el-button size="medium">清空重填</el-button>
+									</el-col>
+								</el-row>
+							</el-col>
+						</el-row>
+					</template>
+				</el-tab-pane>
+				<el-tab-pane label="房贷计算器" name="tabLoan">
+					<template>
+						<el-row type="flex" justify="center" align="middle">
+							<el-col :span="18">
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">贷款类别<el-row></el-col>
+									<el-col :span="16">
+										<el-select v-model="loanTypeLoan">
+											<el-option v-for="item in loanTypeLoanOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+										</el-select>
+									</el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">贷款总额<el-row></el-col>
+									<el-col :span="12">
+										<el-input placeholder="请输入贷款总额" v-model="totalLoan">
+											<template slot="append">
+												<el-col :span="4"><i>万元</i></el-col>
+											</template>
+										</el-input>
+									</el-col>
+									
+								</el-row>
+								<el-row align="middle" :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">贷款周期<el-row></el-col>
+									<el-col :span="12">
+										<el-slider v-model="termLoan" show-input :format-tooltip="formatTooltipTermLoan" :min=1 :max=30>
+											<template slot="append">
+												<i>年</i>
+											</template>
+										</el-slider>
+									</el-col>
+								</el-row>
+								<el-row align="middle" :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">贷款利率<el-row></el-col>
+									<el-col :span="12">
+										<el-input v-model="interestRealLoan">
+											<el-select v-model="interestLoan" slot="prepend">
+												<el-option v-for="item in interestLoanOptions" :key="item.value" :label="item.label" :value="item.value"></el-option>
+											</el-select>
+											<template slot="append">
+												<el-col :span="4"><i>%</i></el-col>
+											</template>
+										</el-input>
+									</el-col>
+								</el-row>
+								<div v-if="houseNewTax">
+									<el-row :gutter="20" class="el-row-margin">
+										<el-col :span="8"><el-row type="flex" justify="end">还款方式<el-row></el-col>
+										<el-col :span="16">
+											<el-radio-group v-model="repaymentMethodLoan">
+												<el-radio label="equalPrincipalInterest">等额本息</el-radio>
+												<el-radio label="equalPrincipal">等额本金</el-radio>
+											</el-radio-group>
+										</el-col>
+									</el-row>
+								</div>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="16" :offset="8">
+										<el-button type="primary" size="medium">开始计算</el-button>
+										<el-button size="medium">清空重填</el-button>
+									</el-col>
+								</el-row>
+							</el-col>
+						</el-row>
+					</template>
+				</el-tab-pane>
+			</el-tabs>
+		</el-col>
+	</el-row>
+</div>
+<div th:include="include/footer_js::footer"></div>
+<script th:src="@{/statics/plugins/chart/echarts.min.js}"></script>
+<script th:src="@{/statics/js/public/calculator/house.js}"></script>
+</body>
+</html>
