@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/header_css::header('')"></head>
+<style>
+	.el-row-margin {
+		margin-bottom: 20px;
+	}
+	.el-row-margin-last {
+		margin-bottom: 0;
+	}
+</style>
+</head>
+<body>
+<div id="dpLTE">
+	<el-row type="flex" justify="center" align="middle">
+		<el-col :span="20">
+			<el-tabs v-model="activeName" @tab-click="changeTab">
+				<el-tab-pane label="五险一金计算器" name="tabSalaryInsura">
+					<template>
+						<el-row type="flex" justify="center" align="middle">
+							<el-col :span="18">
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">城市</el-row></el-col>
+									<el-col :span="16">
+										<el-select v-model="city" filterable>
+											<el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+										</el-select>
+									</el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">月工资</el-row></el-col>
+									<el-col :span="12">
+										<el-input v-model="salary_per_month" placeholder="请输入月工资">
+											<template slot="append">
+												<div style="width: 40px;"><i>元</i></div>
+											</template>
+										</el-input>
+									</el-col>
+								</el-row>
+							</el-col>
+						</el-row>
+					</template>
+				</el-tab-pane>
+				<el-tab-pane label="工资计算器" name="tabSalaryTax">
+					<template>
+						<el-row type="flex" justify="center" align="middle">
+							<el-col :span="18">
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">城市</el-row></el-col>
+									<el-col :span="16">
+										<el-select v-model="city" filterable>
+											<el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+										</el-select>
+									</el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">月工资</el-row></el-col>
+									<el-col :span="12">
+										<el-input v-model="salary_per_month" placeholder="请输入月工资">
+											<template slot="append">
+												<div style="width: 40px;"><i>元</i></div>
+											</template>
+										</el-input>
+									</el-col>
+								</el-row>
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">月免税额</el-row></el-col>
+									<el-col :span="12">
+										<el-input v-model="tax_free_per_month" placeholder="请输入月免税额">
+											<template slot="append">
+												<div style="width: 40px;"><i>元</i></div>
+											</template>
+										</el-input>
+									</el-col>
+								</el-row>
+							</el-col>
+						</el-row>
+					</template>
+				</el-tab-pane>
+				<el-tab-pane label="年终奖计算器" name="tabLoan">
+					<template>
+						<el-row type="flex" justify="center" align="middle">
+							<el-col :span="18">
+								<el-row :gutter="20" class="el-row-margin">
+									<el-col :span="8"><el-row type="flex" justify="end">贷款类别</el-row></el-col>
+									<el-col :span="16">
+										<el-select v-model="city">
+											<el-option v-for="item in cities" :key="item.value" :label="item.label" :value="item.value"></el-option>
+										</el-select>
+									</el-col>
+								</el-row>
+							</el-col>
+						</el-row>
+					</template>
+				</el-tab-pane>
+			</el-tabs>
+		</el-col>
+	</el-row>
+	<el-row type="flex" justify="center" align="middle">
+		<el-col :span="20">
+			<el-row type="flex" justify="center" align="middle">
+				<el-col :span="18">
+					<el-row :gutter="20" class="el-row-margin">
+						<el-col :span="16" :offset="8">
+							<el-button type="primary" size="medium" @click="compute">开始计算</el-button>
+							<el-button size="medium" @click="clear">清空重填</el-button>
+							<el-button v-if="activeName === 'tabSalaryInsura'">
+								<a target="_blank" :href="related_link">相关链接</a>
+							</el-button>
+
+						</el-col>
+					</el-row>
+				</el-col>
+			</el-row>
+		</el-col>
+	</el-row>
+	<el-row type="flex" justify="center" align="middle">
+		<el-col :span="20">
+			<el-row type="flex" justify="center" align="middle" v-if="activeName === 'tabSalaryInsura'">
+				<el-table :data="tableData" strip border>
+					<el-table-column label="项目">
+						<template slot-scope="scope">
+							<i :class="scope.row.icon"></i>&nbsp;{{scope.row.item}}
+						</template>
+					</el-table-column>
+					<el-table-column prop="base" label="基数" align="right"></el-table-column>
+					<el-table-column prop="personal" label="个人部分" align="right"></el-table-column>
+					<el-table-column prop="personalRate" label="" align="right" width="100px;"></el-table-column>
+					<el-table-column prop="company" label="单位部分" align="right"></el-table-column>
+					<el-table-column prop="companyRate" label="" align="right" width="100px;"></el-table-column>
+				</el-table>
+			</el-row>
+			<el-row type="flex" justify="center" align="middle" v-if="activeName === 'tabSalaryInsura'">
+				<el-col :span="24">
+					<div id="chartInsuraPersonalWrapper" ref="chartInsuraPersonalWrapperRef">
+						<div id="chartInsuraPersonal" :style="styleChart" ref="chartInsuraPersonalRef"></div>
+					</div>
+				</el-col>
+			</el-row>
+			<el-row type="flex" justify="center" align="middle" v-if="activeName === 'tabSalaryInsura'">
+				<el-col :span="24">
+					<div id="chartInsuraCompanyWrapper" ref="chartInsuraCompanyWrapperRef">
+						<div id="chartInsuraCompany" :style="styleChart" ref="chartInsuraCompanyRef"></div>
+					</div>
+				</el-col>
+			</el-row>
+			<el-row v-if="activeName === 'tabSalaryTax'">
+				<el-row>
+					<el-table :data="tableData" strip border>
+						<el-table-column label="月份" align="right">
+							<template slot-scope="scope">{{scope.row.month}}</template>
+						</el-table-column>
+						<el-table-column label="月工资" align="right">
+							<template slot-scope="scope">{{scope.row.salary.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="四险一金" align="right">
+							<template slot-scope="scope">{{scope.row.insura.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="免税额累计" align="right">
+							<template slot-scope="scope">{{scope.row.tax_free_total.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税前工资" align="right">
+							<template slot-scope="scope">{{scope.row.salary_after_insura_take_off.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税前工资累计" align="right">
+							<template slot-scope="scope">{{scope.row.salary_before_tax_start_take_off_total.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="起征点累计" align="right">
+							<template slot-scope="scope">{{scope.row.tax_start_total.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="纳税额" align="right">
+							<template slot-scope="scope">{{scope.row.salary_after_tax_start_take_off_total.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税率" align="right">
+							<template slot-scope="scope">{{scope.row.rate.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="速算扣除数" align="right">
+							<template slot-scope="scope">{{scope.row.qc.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税金" align="right">
+							<template slot-scope="scope">{{scope.row.tax.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税金累计" align="right">
+							<template slot-scope="scope">{{scope.row.tax_total.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税后工资" align="right">
+							<template slot-scope="scope">{{scope.row.salary_after_tax.toFixed(2)}}</template>
+						</el-table-column>
+						<el-table-column label="税后工资累计" align="right">
+							<template slot-scope="scope">{{scope.row.salary_after_tax_total.toFixed(2)}}</template>
+						</el-table-column>
+					</el-table>
+				</el-row>
+				<el-row>
+					<el-col :span="24">
+						<div id="chart_tax_wrapper" ref="chart_tax_wrapper_ref">
+							<div id="chart_tax" :style="styleChart" ref="chart_tax_ref"></div>
+						</div>
+					</el-col>
+				</el-row>
+			</el-row>
+		</el-col>
+	</el-row>
+</div>
+<div th:include="include/footer_js::footer"></div>
+<script th:src="@{/statics/plugins/chart/echarts.min.js}"></script>
+<script th:src="@{/statics/js/public/calculator/salary.js}"></script>
+</body>
+</html>
