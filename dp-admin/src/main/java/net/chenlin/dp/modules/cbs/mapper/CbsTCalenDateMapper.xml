@@ -88,6 +88,16 @@
 			ID = #{id}
 	</select>
 	
+	<select id="selectMonthByDateRange" resultType="java.util.Map">
+		select
+			distinct substring(DATE_FMT_10, 1, 7) as TERM 
+		from 
+			CBS_T_CALEN_DATE
+		where
+			DATE_FMT_10 BETWEEN #{startDate} AND #{endDate}
+		order by TERM
+	</select>
+	
 	<update id="update">
 		UPDATE CBS_T_CALEN_DATE
 	 	<set>

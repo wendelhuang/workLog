@@ -31,6 +31,9 @@ public interface CbsVBookKeepMapper extends BaseMapper<CbsVBookKeepEntity> {
 	List<Map<String, Object>> listReportStream(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
 
+	List<Map<String, Object>> listReportMonthly(@Param("uid") Long uid, @Param("startDate") String startDate,
+			@Param("endDate") String endDate, @Param("outIn") String outIn);
+
 	List<Map<String, Object>> listReportType(@Param("uid") Long uid, @Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("outIn") String outIn);
 

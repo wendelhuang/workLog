@@ -1,5 +1,14 @@
 package net.chenlin.dp.modules.cbs.service.impl;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import net.chenlin.dp.common.entity.Page;
 import net.chenlin.dp.common.entity.Query;
 import net.chenlin.dp.common.entity.R;
@@ -8,13 +17,9 @@ import net.chenlin.dp.modules.cbs.dao.CbsVBookKeepMapper;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
 import net.chenlin.dp.modules.cbs.entity.CbsTKeepTypeEntity;
 import net.chenlin.dp.modules.cbs.entity.CbsVBookKeepEntity;
+import net.chenlin.dp.modules.cbs.service.CbsTCalenDateService;
 import net.chenlin.dp.modules.cbs.service.CbsVBookKeepService;
 import net.chenlin.dp.modules.sys.entity.SysUserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * VIEW
@@ -29,6 +34,9 @@ public class CbsVBookKeepServiceImpl implements CbsVBookKeepService {
 
 	@Autowired
 	private CbsTKeepTypeServiceImpl cbsTKeepTypeServiceImpl;
+
+	@Autowired
+	private CbsTCalenDateService cbsTCalenDateService;
 
 	/**
 	 * 分页查询
@@ -131,6 +139,29 @@ public class CbsVBookKeepServiceImpl implements CbsVBookKeepService {
 		List<Map<String, Object>> out = cbsVBookKeepMapper.listReportStream(uid, startDate, endDate, "OUT");
 		List<Map<String, Object>> in = cbsVBookKeepMapper.listReportStream(uid, startDate, endDate, "IN");
 		return R.ok().put("out", out).put("in", in);
+	}
+
+	@Override
+	public R reportMonthly(Long uid, String startDate, String endDate) {
+		List<Map<String, Object>> out = cbsVBookKeepMapper.listReportMonthly(uid, startDate, endDate, "OUT");
+		List<Map<String, Object>> in = cbsVBookKeepMapper.listReportMonthly(uid, startDate, endDate, "IN");
+
+		List<String> types = Stream.of(out, in).map(m -> m.stream()).flatMap(m -> m)
+				.map(m -> m.get("TYPE_NAME").toString()).distinct().sorted().collect(Collectors.toList());
+
+		List<Map<String, Object>> monthMap = cbsTCalenDateService.selectMonthByDateRange(startDate, endDate);
+		List<String> months = monthMap.stream().map(m -> m.get("TERM").toString()).collect(Collectors.toList());
+		Map<String, Integer> monthIndex = IntStream.range(0, months.size()).boxed()
+				.collect(Collectors.toMap(months::get, i -> i));
+
+		/*
+		 * Stream.of(out.stream(), in.stream()).flatMap(m -> m.getC);
+		 * List<String> types = Stream.of(out.stream(), in.stream()).map(m ->
+		 * m.get("TYPE_NAME").toString())
+		 * .distinct().collect(Collectors.toList());
+		 */
+		return R.ok().put("out", out).put("in", in).put("types", types).put("months", months).put("monthIndex",
+				monthIndex);
 	}
 
 	@Override

@@ -345,6 +345,64 @@
 			ON T1.DTE = T2.DTE
 		) T order by DTE
 	</select>
+	
+	<select id="listReportMonthly" resultType="java.util.Map">
+		select 
+			B.UID, B.TERM, B.MONEY, B.OUT_IN, B.TYPE_ID, B.TYPE_NAME, C.SUM_MONEY
+		from 
+		(
+			select 
+				UID, DATE_FORMAT(START, '%Y-%m') AS TERM,  sum(money) AS MONEY, OUT_IN, TYPE_ID, max(TYPE_NAME) AS TYPE_NAME 
+			from
+			(
+				select 
+					CBS_V_BOOK_KEEP.start,
+					CBS_V_BOOK_KEEP.UID,
+					CBS_V_BOOK_KEEP.MONEY,
+					CBS_V_BOOK_KEEP.OUT_IN,
+					ifnull(CBS_V_BOOK_KEEP.TYPE_ID, -1) AS TYPE_ID,
+					ifnull(CBS_T_KEEP_TYPE.TYPE_NAME,'其他') AS TYPE_NAME
+				from
+					CBS_V_BOOK_KEEP left join CBS_T_KEEP_TYPE 
+					ON CBS_V_BOOK_KEEP.TYPE_ID = CBS_T_KEEP_TYPE.ID
+				where 
+					CBS_V_BOOK_KEEP.UID = #{uid}
+					and DATE_FORMAT(CBS_V_BOOK_KEEP.start, '%Y-%m-%d') between #{startDate} and #{endDate}
+					and CBS_V_BOOK_KEEP.OUT_IN = #{outIn}
+			) A
+			group by TERM, TYPE_ID 
+			ORDER BY TERM, MONEY desc
+		)B 
+		left join 
+		(
+			select 
+				UID, TERM, SUM(MONEY) AS SUM_MONEY
+			from 
+			(
+				select
+					UID, DATE_FORMAT(START, '%Y-%m') AS TERM,  sum(money) AS MONEY, OUT_IN, TYPE_ID, max(TYPE_NAME) AS TYPE_NAME
+				from
+				(
+					select 
+						CBS_V_BOOK_KEEP.start,
+						CBS_V_BOOK_KEEP.UID,
+						CBS_V_BOOK_KEEP.MONEY,
+						CBS_V_BOOK_KEEP.OUT_IN,
+						ifnull(CBS_V_BOOK_KEEP.TYPE_ID, -1) AS TYPE_ID,
+						ifnull(CBS_T_KEEP_TYPE.TYPE_NAME,'其他') AS TYPE_NAME
+					from
+						CBS_V_BOOK_KEEP left join CBS_T_KEEP_TYPE 
+						ON CBS_V_BOOK_KEEP.TYPE_ID = CBS_T_KEEP_TYPE.ID
+					where 
+						CBS_V_BOOK_KEEP.UID = #{uid}
+						and DATE_FORMAT(CBS_V_BOOK_KEEP.start, '%Y-%m-%d') between #{startDate} and #{endDate}
+						and CBS_V_BOOK_KEEP.OUT_IN = #{outIn}
+				)A
+				group by TERM, TYPE_ID
+			)B group by UID, TERM
+		) C 
+		on B.UID = C.UID and B.TERM = C.TERM
+	</select>
 
 	<select id="listReportType" resultType="java.util.Map">
 		select

@@ -54,4 +54,6 @@ public interface CbsTCalenDateService {
 	R batchRemove(Long[] id);
 
 	List<CbsTCalenDateEntity> listByYearAndMonth(int i, int j);
+
+	List<Map<String, Object>> selectMonthByDateRange(String startDate, String endDate);
 }

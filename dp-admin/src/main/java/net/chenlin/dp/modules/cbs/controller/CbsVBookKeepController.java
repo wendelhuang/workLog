@@ -1,5 +1,12 @@
 package net.chenlin.dp.modules.cbs.controller;
 
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import net.chenlin.dp.common.annotation.SysLog;
 import net.chenlin.dp.common.entity.R;
 import net.chenlin.dp.modules.cbs.entity.CbsTBookKeepEntity;
@@ -9,12 +16,6 @@ import net.chenlin.dp.modules.cbs.service.CbsTBookKeepService;
 import net.chenlin.dp.modules.cbs.service.CbsTCalenEventService;
 import net.chenlin.dp.modules.cbs.service.CbsVBookKeepService;
 import net.chenlin.dp.modules.sys.controller.AbstractController;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * VIEW
@@ -125,6 +126,13 @@ public class CbsVBookKeepController extends AbstractController {
 	@RequestMapping("/reportStream")
 	public R reportStream(@RequestBody Map<String, Object> params) {
 		return cbsVBookKeepService.reportStream(getUserId(), params.get("startDate").toString(),
+				params.get("endDate").toString());
+	}
+
+	@SysLog("reportMonthly")
+	@RequestMapping("/reportMonthly")
+	public R reportMonthly(@RequestBody Map<String, Object> params) {
+		return cbsVBookKeepService.reportMonthly(getUserId(), params.get("startDate").toString(),
 				params.get("endDate").toString());
 	}
 

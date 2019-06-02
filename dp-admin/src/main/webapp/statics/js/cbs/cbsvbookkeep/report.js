@@ -93,6 +93,7 @@ var vm = new Vue({
                         vm.tableData[i].outInFormat = outInFormat[vm.tableData[i].outIn];
                         vm.tableData[i].typeIcon = '';
                         vm.tableData[i].typeName = '';
+                        vm.tableData[i].start = vm.tableData[i].start.substring(0, 16);
                         if (vm.tableData[i].typeId != undefined) {
                             vm.tableData[i].typeIcon = cbsTKeepType[vm.tableData[i].typeId].typeIcon;
                             vm.tableData[i].typeName = cbsTKeepType[vm.tableData[i].typeId].typeName;
@@ -252,6 +253,93 @@ var vm = new Vue({
                     myChart.setOption(option, true);
                 }
             });
+        },
+        tabByMonthClick: function() {
+        	// 基于准备好的dom，初始化echarts实例
+        	var myChart = echarts.getInstanceByDom(document.getElementById('report'));
+        	if (myChart == null) {
+        		myChart = echarts.init(document.getElementById('report'));
+        	}
+        	/*myChart.on('click', this.loadSingleDate);*/
+        	myChart.showLoading({
+        		text: '数据努力加载中...'
+        	});
+        	$.post({
+        		url: '../../CBS/V/BOOK/KEEP/reportMonthly?_' + $.now(),
+        		dataType: 'json',
+        		contentType: 'application/json',
+        		data: JSON.stringify({startDate: this.dateRange[0], endDate: this.dateRange[1]}),
+        		type: 'POST',
+        		success: function(data) {
+        			var in_data = data['in'];
+        			var out_data = data['out'];
+        			var types = data['types'];
+        			var months = data['months'];
+        			var month_index = data['monthIndex'];
+        			
+        			var in_data_by_month = [];
+        			for(var i = 0; i < types.length; i++) {
+        				var h = {};
+        				h.name = types[i];
+        				h.type='bar';
+        				h.stack = '收入';
+        				h.data = new Array(months.length).fill(0.0);
+        				for(var j = 0; j < in_data.length; j++) {
+        					if(in_data[j].TYPE_NAME == types[i]) {
+        						h.data[month_index[in_data[j].TERM]] = in_data[j].MONEY;
+        					}
+        				}
+        				in_data_by_month.push(h);
+        			}
+        			
+        			var out_data_by_month = [];
+        			for(var i = 0; i < types.length; i++) {
+        				var h = {};
+        				h.name = types[i];
+        				h.type='bar';
+        				h.stack = '支出';
+        				h.data = new Array(months.length).fill(0.0);
+        				for(var j = 0; j < out_data.length; j++) {
+        					if(out_data[j].TYPE_NAME == types[i]) {
+        						h.data[month_index[out_data[j].TERM]] = out_data[j].MONEY;
+        					}
+        				}
+        				out_data_by_month.push(h);
+        			}
+        			
+        			// 指定图表的配置项和数据
+        			var option = {
+        					title: {
+        						text: '月度收支图',
+        						x: 'center'
+        					},
+        					legend: {
+        						data: types
+        					},
+        					tooltip: {
+        						trigger: 'axis',
+        						axisPointer: {
+        							axis: 'x'
+        						}
+        					},
+        					xAxis: [
+        						{
+        					        type: 'category',
+        					        data: months
+        					    }
+        					],
+        					yAxis: [
+        					    {
+        					    	type: 'value'
+        					    }
+        					],
+        					series: in_data_by_month.concat(out_data_by_month)
+        			};
+        			myChart.hideLoading();
+        			// 使用刚指定的配置项和数据显示图表。
+        			myChart.setOption(option, true);
+        		}
+        	});
         },
         tabDetailsClick: function() {
             // 基于准备好的dom，初始化echarts实例

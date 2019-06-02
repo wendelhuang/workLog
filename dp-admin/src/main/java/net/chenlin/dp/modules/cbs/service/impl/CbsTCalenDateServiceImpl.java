@@ -94,4 +94,8 @@ public class CbsTCalenDateServiceImpl implements CbsTCalenDateService {
 		return cbsTCalenDateMapper.list(query);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectMonthByDateRange(String startDate, String endDate) {
+		return cbsTCalenDateMapper.selectMonthByDateRange(startDate, endDate);
+	}
 }
