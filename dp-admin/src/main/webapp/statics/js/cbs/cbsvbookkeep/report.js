@@ -320,6 +320,32 @@ var vm = new Vue({
         						trigger: 'axis',
         						axisPointer: {
         							axis: 'x'
+        						},
+        						formatter: function(params) {
+        							var result = '';
+        							
+        							var in_tooltip = '';
+        							var in_money = 0.0;
+        							for(var i = 0; i < params.length/2; i++) {
+        								var p = params[i];
+        								if (p.data > 0) {
+        									in_money += p.data;
+        									in_tooltip += (p.marker + p.seriesName + ': ' + p.data.toFixed(2) + '<br/>');
+        								}
+        							}
+        							result = '收入: ' + in_money.toFixed(2) + ' <br />' + in_tooltip;
+        							
+        							var out_tooltip = '';
+        							var out_money = 0.0;
+        							for(var i = params.length/2; i < params.length; i++) {
+        								var p = params[i];
+        								if (p.data > 0) {
+        									out_money += p.data;
+        									out_tooltip += (p.marker + p.seriesName + ': ' + p.data.toFixed(2) + '<br/>');
+        								}
+        							}
+        							result += '支出: -' + out_money.toFixed(2) + ' <br />' + out_tooltip + '余额: ' + (in_money-out_money).toFixed(2);
+        							return result;
         						}
         					},
         					xAxis: [
